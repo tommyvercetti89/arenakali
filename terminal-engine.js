@@ -103,6 +103,7 @@
     this.isRoot = false;
     this.history = [];
     this.historyIndex = -1;
+    this.lang = 'tr';
     this.env = {
       USER: 'kali',
       HOME: '/home/kali',
@@ -277,6 +278,17 @@
 
     switch (cmd) {
       case 'help':
+        if (this.lang === 'en') {
+          return [
+            "ArenaKali Terminal - Supported Linux & Cybersecurity Commands:",
+            "  Files & Dirs: ls, pwd, cd, cat, head, tail, touch, mkdir, rm, cp, mv, file",
+            "  Filter & Pipe: grep, wc, awk, cut, sort, uniq, sed, echo",
+            "  User & Permissions: whoami, id, uname, chmod, chown, sudo, su",
+            "  Network & Recon: nmap, nc (netcat), curl, ss, netstat, ping",
+            "  Crypto & Forensics: base64, sha256sum, md5sum, strings, history, clear",
+            "  Hint: Operators '|', '>', '>>' are active. Find the hidden CTF flag in /root/root.txt!"
+          ].join('\n');
+        }
         return [
           "ArenaKali Terminal - Desteklenen Linux & Siber Güvenlik Komutları:",
           "  Dosya & Dizin: ls, pwd, cd, cat, head, tail, touch, mkdir, rm, cp, mv, file",

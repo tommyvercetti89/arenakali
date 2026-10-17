@@ -90,7 +90,7 @@
             <span class="mode-tab-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
             </span>
-            <span class="mode-tab-title">Terminal Quiz</span>
+            <span class="mode-tab-title" data-i18n="quizTabTitle">Terminal Quiz</span>
           </div>
           <span class="mode-tab-sub" data-i18n="quizTabSub">Linux komut çıktısı & siber güvenlik soruları</span>
         </button>
@@ -99,7 +99,7 @@
             <span class="mode-tab-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"></path><path d="M14.12 3.88 16 2"></path><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"></path><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"></path><path d="M12 20v-9"></path><path d="M6.53 9C4.6 8.8 3 7.1 3 5"></path><path d="M6 13H2"></path><path d="M3 21c0-2.1 1.7-3.9 3.8-4"></path><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"></path><path d="M22 13h-4"></path><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"></path></svg>
             </span>
-            <span class="mode-tab-title">Bug & Exploit Hunter</span>
+            <span class="mode-tab-title" data-i18n="debugTabTitle">Bug & Exploit Hunter</span>
           </div>
           <span class="mode-tab-sub" data-i18n="debugTabSub">Komutlardaki sözdizimi ve güvenlik tuzaklarını bul</span>
         </button>
@@ -167,7 +167,7 @@
           <div class="feedback-answer" id="feedbackAnswer"></div>
           <p class="feedback-text" id="feedbackText"></p>
           <div class="feedback-actions">
-            <button class="btn btn-primary" id="nextBtn" type="button">Sonraki Soru</button>
+            <button class="btn btn-primary" id="nextBtn" type="button" data-i18n="nextQuestion">Sonraki Soru</button>
           </div>
         </div>
       </div>
@@ -217,8 +217,8 @@
           <span class="chip chip-diff" data-i18n="terminalTitle">Kali Web Terminal</span>
         </div>
         <div class="quiz-head-right">
-          <button class="btn btn-ghost btn-sm" id="termClearBtn" type="button">Temizle</button>
-          <button class="btn btn-ghost btn-sm" id="termSampleBtn" type="button">Örnek Komutlar</button>
+          <button class="btn btn-ghost btn-sm" id="termClearBtn" type="button" data-i18n="termClear">Temizle</button>
+          <button class="btn btn-ghost btn-sm" id="termSampleBtn" type="button" data-i18n="termSample">Örnek Komutlar</button>
         </div>
       </div>
 
@@ -311,9 +311,9 @@ Desteklenen komutlar için 'help' yazabilirsin. CTF Flag /root/root.txt içinde 
         </div>
         <div class="segmented">
           <button class="seg-btn active" id="timeOffBtn" type="button" data-i18n="timeOff">Kapalı</button>
-          <button class="seg-btn" id="time2Btn" type="button">2 dk</button>
-          <button class="seg-btn" id="time5Btn" type="button">5 dk</button>
-          <button class="seg-btn" id="time10Btn" type="button">10 dk</button>
+          <button class="seg-btn" id="time2Btn" type="button" data-i18n="time2">2 dk</button>
+          <button class="seg-btn" id="time5Btn" type="button" data-i18n="time5">5 dk</button>
+          <button class="seg-btn" id="time10Btn" type="button" data-i18n="time10">10 dk</button>
         </div>
       </div>
 
@@ -338,10 +338,10 @@ Desteklenen komutlar için 'help' yazabilirsin. CTF Flag /root/root.txt içinde 
           <span class="setting-label" data-i18n="setupLevel">Seviye</span>
         </div>
         <div class="segmented">
-          <button class="seg-btn active" id="debugLvlBeginner" type="button">Başlangıç</button>
-          <button class="seg-btn" id="debugLvlIntermediate" type="button">Orta</button>
-          <button class="seg-btn" id="debugLvlAdvanced" type="button">İleri</button>
-          <button class="seg-btn" id="debugLvlExpert" type="button">Uzman</button>
+          <button class="seg-btn active" id="debugLvlBeginner" type="button" data-i18n="lvlBeginner">Başlangıç</button>
+          <button class="seg-btn" id="debugLvlIntermediate" type="button" data-i18n="lvlIntermediate">Orta</button>
+          <button class="seg-btn" id="debugLvlAdvanced" type="button" data-i18n="lvlAdvanced">İleri</button>
+          <button class="seg-btn" id="debugLvlExpert" type="button" data-i18n="lvlExpert">Uzman</button>
         </div>
       </div>
 
@@ -394,16 +394,16 @@ Desteklenen komutlar için 'help' yazabilirsin. CTF Flag /root/root.txt içinde 
       </div>
       <p class="modal-text" data-i18n="helpIntro">ArenaKali, siber güvenlik öğrenenler için Linux komutlarını, filtreleri ve yetki yükseltme mantığını test eden bir pratik aracıdır.</p>
       <div class="review-item" style="margin-bottom:12px;">
-        <strong style="color:var(--accent);">TERMINAL QUIZ</strong>
-        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Ekranda görünen Linux komutunun, pipe zincirinin veya script'inin sonucunu tahmin et.</p>
+        <strong style="color:var(--accent);" data-i18n="helpQuizTitle">TERMINAL QUIZ</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);" data-i18n="helpQuizDesc">Ekranda görünen Linux komutunun, pipe zincirinin veya script'inin sonucunu tahmin et.</p>
       </div>
       <div class="review-item" style="margin-bottom:12px;">
-        <strong style="color:var(--amber);">BUG & EXPLOIT HUNTER</strong>
-        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Komuttaki ölümcül syntax hatalarını, tırnak eksikliklerini ve yetki zafiyetlerini dedektif gibi bul.</p>
+        <strong style="color:var(--amber);" data-i18n="helpDebugTitle">BUG & EXPLOIT HUNTER</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);" data-i18n="helpDebugDesc">Komuttaki ölümcül syntax hatalarını, tırnak eksikliklerini ve yetki zafiyetlerini dedektif gibi bul.</p>
       </div>
       <div class="review-item" style="margin-bottom:12px;">
-        <strong style="color:var(--green);">KALI WEB TERMINAL</strong>
-        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Üst bardaki terminal simgesiyle interaktif kabuğu aç. /etc/shadow, /var/log/auth.log ve /root/root.txt dosyalarını içeren sanal dosya sisteminde pratik yap!</p>
+        <strong style="color:var(--green);" data-i18n="helpTermTitle">KALI WEB TERMINAL</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);" data-i18n="helpTermDesc">Üst bardaki terminal simgesiyle interaktif kabuğu aç. /etc/shadow, /var/log/auth.log ve /root/root.txt dosyalarını içeren sanal dosya sisteminde pratik yap!</p>
       </div>
     </div>
   </div>
