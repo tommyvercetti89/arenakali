@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; frame-src 'none'; media-src 'none'; base-uri 'none'; form-action 'none';" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ArenaKali · Linux & Siber Güvenlik Mantık Testi</title>
+  <meta name="description" content="Linux komutlarının çıktısını tahmin et: temel komutlardan siber güvenlik, keşif ve yetki yükseltmeye (privesc) açıklamalı testler." />
+  <meta property="og:title" content="ArenaKali · Linux & Siber Güvenlik Mantık Testi" />
+  <meta property="og:description" content="Linux komutlarının çıktısını tahmin et: temel komutlardan siber güvenlik, keşif ve yetki yükseltmeye açıklamalı testler." />
+  <meta property="og:image" content="arena.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#07080c" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ArenaKali" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="brand" id="brandHome" type="button">
+        <img class="brand-mark" src="icon-192.png" alt="ArenaKali Logo" />
+        <span class="brand-name">ArenaKali</span>
+      </button>
+      <button class="icon-btn" id="helpBtn" type="button" title="Nasıl oynanır?" aria-label="Nasıl oynanır?">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      </button>
+    </div>
+    <div class="topbar-right">
+      <span class="brand-tag" data-i18n="brandTag">kali · linux · cyber quiz</span>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="playgroundBtn" type="button" title="Terminal Modu" aria-label="Terminal Modu">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+        </button>
+        <button class="icon-btn" id="fullscreenBtn" type="button" title="Tam ekran" aria-label="Tam ekran">
+          <svg class="icon" id="fsIconEnter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <svg class="icon hidden" id="fsIconExit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+        </button>
+        <button class="icon-btn" id="settingsBtn" type="button" title="Ayarlar" aria-label="Ayarlar">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SCREEN: HOME -->
+    <section id="screenHome" class="screen active">
+      <div class="hero">
+        <h1><span data-i18n="heroTitleA">Komutun çıktısını </span><span data-i18n="heroTitleB">tahmin edebilir misin?</span></h1>
+        <p data-i18n="heroText">Temel Linux komutlarından siber güvenlik, keşif, adli bilişim ve yetki yükseltme (privesc) mantığına interaktif pratik yap.</p>
+      </div>
+
+      <div class="home-panel" id="homePanel">
+        <div class="home-panel-item">
+          <span class="home-panel-label" data-i18n="statLevelLabel">Seviye</span>
+          <span class="home-panel-value" id="levelValue">1</span>
+        </div>
+        <div class="home-panel-item home-panel-xp">
+          <div class="home-panel-head">
+            <span class="home-panel-label">XP</span>
+            <span class="home-panel-sub" id="xpValue">0 / 250 XP</span>
+          </div>
+          <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+        </div>
+        <div class="home-panel-item">
+          <span class="home-panel-label" data-i18n="statStreakLabel">Gün Serisi</span>
+          <span class="home-panel-value" id="streakValue">0</span>
+        </div>
+        <div class="home-panel-actions">
+          <button class="btn btn-primary btn-sm" id="dailyBtn" type="button" data-i18n="dailyChallenge">Günlük Meydan Okuma</button>
+          <button class="btn btn-ghost btn-sm" id="statsBtn" type="button" data-i18n="statsTitle">İstatistikler</button>
+          <button class="btn btn-ghost btn-sm" id="mistakesBtn" type="button" data-i18n="mistakesTest">Yanlışlarımı Çalış</button>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab active" id="modeTabQuiz" type="button">
+          <div class="mode-tab-head">
+            <span class="mode-tab-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+            </span>
+            <span class="mode-tab-title">Terminal Quiz</span>
+          </div>
+          <span class="mode-tab-sub" data-i18n="quizTabSub">Linux komut çıktısı & siber güvenlik soruları</span>
+        </button>
+        <button class="mode-tab" id="modeTabDebug" type="button">
+          <div class="mode-tab-head">
+            <span class="mode-tab-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"></path><path d="M14.12 3.88 16 2"></path><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"></path><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"></path><path d="M12 20v-9"></path><path d="M6.53 9C4.6 8.8 3 7.1 3 5"></path><path d="M6 13H2"></path><path d="M3 21c0-2.1 1.7-3.9 3.8-4"></path><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"></path><path d="M22 13h-4"></path><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"></path></svg>
+            </span>
+            <span class="mode-tab-title">Bug & Exploit Hunter</span>
+          </div>
+          <span class="mode-tab-sub" data-i18n="debugTabSub">Komutlardaki sözdizimi ve güvenlik tuzaklarını bul</span>
+        </button>
+      </div>
+
+      <div id="quizSection">
+        <div class="section-head">
+          <h2 data-i18n="homeSectionTitle">Zorluk seviyesi seç</h2>
+          <p data-i18n="homeSectionSub">Sorular her seferinde karıştırılır, her deneme farklı bir siber antrenmandır.</p>
+        </div>
+        <div class="diff-grid" id="diffGrid"></div>
+      </div>
+
+      <div id="debugSection" class="hidden">
+        <div class="section-head">
+          <h2 data-i18n="debugSectionTitle">Debug seviyesi seç</h2>
+          <p data-i18n="debugDesc">Komutlardaki tehlikeli hataları ve güvenlik açıklarını dedektif gibi bul</p>
+        </div>
+        <div class="diff-grid" id="debugGrid"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: QUIZ -->
+    <section id="screenQuiz" class="screen">
+      <div class="quiz-head">
+        <div class="quiz-head-left">
+          <button class="btn btn-ghost btn-sm" id="quizBackBtn" type="button" data-i18n="quizBack">← Seviye Seç</button>
+          <span class="chip chip-diff" id="quizDiffChip">Başlangıç</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-meta">
+          <span id="progressQuestion">Soru 1 / 10</span>
+          <div class="progress-meta-right">
+            <span class="chip chip-timer hidden" id="timerChip">00:00</span>
+            <span id="progressScore">Doğru: 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="code-window">
+          <div class="code-head">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="code-lang" id="codeLangLabel">bash · linux</span>
+          </div>
+          <pre class="code"><code id="codeBlock"></code></pre>
+        </div>
+
+        <p class="question-text" id="questionText">Bu komut çalıştırıldığında ne olur?</p>
+
+        <div class="options" id="optionsGrid"></div>
+
+        <p class="kbd-hint" id="kbdHint">Klavye: <kbd>A</kbd>–<kbd>D</kbd> veya <kbd>1</kbd>–<kbd>4</kbd> ile cevapla, <kbd>Enter</kbd> ile devam et</p>
+
+        <div class="feedback hidden" id="feedback">
+          <div class="feedback-head">
+            <span class="feedback-icon" id="feedbackIcon"></span>
+            <strong class="feedback-title" id="feedbackTitle"></strong>
+          </div>
+          <div class="feedback-answer" id="feedbackAnswer"></div>
+          <p class="feedback-text" id="feedbackText"></p>
+          <div class="feedback-actions">
+            <button class="btn btn-primary" id="nextBtn" type="button">Sonraki Soru</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN: RESULT -->
+    <section id="screenResult" class="screen">
+      <div class="result-card">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="ring-bg" cx="100" cy="100" r="86"></circle>
+            <circle class="ring-fill" id="ringFill" cx="100" cy="100" r="86"></circle>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-percent" id="ringPercent">0%</span>
+            <span class="ring-label" id="ringScore">0 / 10</span>
+          </div>
+        </div>
+        <h2 id="resultTitle"></h2>
+        <p class="result-sub" id="resultSubtitle"></p>
+        <p class="result-badges hidden" id="resultBadges"></p>
+        <div class="result-stats">
+          <div class="stat stat-correct"><span class="stat-value" id="statCorrect">0</span><span class="stat-label" data-i18n="statCorrect">Doğru</span></div>
+          <div class="stat stat-wrong"><span class="stat-value" id="statWrong">0</span><span class="stat-label" data-i18n="statWrong">Yanlış</span></div>
+          <div class="stat"><span class="stat-value" id="statDiff">-</span><span class="stat-label" data-i18n="statLevel">Seviye</span></div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="retryBtn" type="button" data-i18n="retry">Tekrar Dene</button>
+          <button class="btn btn-ghost" id="homeBtn" type="button" data-i18n="chooseLevel">Seviye Seç</button>
+        </div>
+      </div>
+
+      <div class="review hidden" id="review">
+        <div class="section-head">
+          <h2 data-i18n="reviewTitle">Yanlışlarını incele</h2>
+          <p data-i18n="reviewSub">Doğru cevaplar ve siber güvenlik açıklamaları burada.</p>
+        </div>
+        <div id="reviewList"></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: TERMINAL PLAYGROUND -->
+    <section id="screenPlay" class="screen">
+      <div class="quiz-head">
+        <div class="quiz-head-left">
+          <button class="btn btn-ghost btn-sm" id="playBackBtn" type="button" data-i18n="quizBack">← Seviye Seç</button>
+          <span class="chip chip-diff" data-i18n="terminalTitle">Kali Web Terminal</span>
+        </div>
+        <div class="quiz-head-right">
+          <button class="btn btn-ghost btn-sm" id="termClearBtn" type="button">Temizle</button>
+          <button class="btn btn-ghost btn-sm" id="termSampleBtn" type="button">Örnek Komutlar</button>
+        </div>
+      </div>
+
+      <div class="terminal-window">
+        <div class="terminal-head">
+          <div class="code-head" style="padding:0; border:none;">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title">kali@arenakali:~ (Virtual Linux Shell)</span>
+          <span class="brand-tag">vfs-active</span>
+        </div>
+        <div class="terminal-body" id="terminalBody">
+          <div class="terminal-log" id="terminalOutput">ArenaKali Linux Web Terminal v2026.1
+Siber güvenlik öğrencileri için etkileşimli istemci tarafı Linux kabuğu.
+Desteklenen komutlar için 'help' yazabilirsin. CTF Flag /root/root.txt içinde gizli!
+</div>
+          <div class="terminal-line">
+            <span class="terminal-prompt" id="terminalPrompt">kali@arenakali:~$ </span>
+            <input type="text" class="terminal-input" id="terminalInput" spellcheck="false" autocomplete="off" autofocus />
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer container">
+    <p data-i18n="footerText">ArenaKali · Siber güvenlik odaklı Linux terminal pratiği.</p>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal-backdrop hidden" id="confirmModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="confirmExitTitle">Testten çıkılsın mı?</h3>
+      </div>
+      <p class="modal-text" data-i18n="confirmExitText">Test ilerlemen kaydedilmeyecek. Emin misin?</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="confirmStayBtn" type="button" data-i18n="confirmStay">Devam Et</button>
+        <button class="btn btn-primary" id="confirmExitBtn" type="button" data-i18n="confirmExit">Çık</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="setupModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="setupTitle">Testi Ayarla</h3>
+        <button class="icon-btn" id="setupClose" type="button" title="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <p class="modal-text" id="setupDiffLabel">Başlangıç · 25 soru</p>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupMode">Mod</span>
+          <span class="setting-desc" id="setupModeDesc">Her sorudan sonra doğru cevabı ve siber güvenlik açıklamasını görürsün.</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="modeClassicBtn" type="button" data-i18n="modeClassic">Klasik</button>
+          <button class="seg-btn" id="modeExamBtn" type="button" data-i18n="modeExam">Sınav</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupTopic">Konu</span>
+        </div>
+        <select class="select" id="topicSelect"></select>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupCount">Soru Sayısı</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn" id="count5Btn" type="button">5</button>
+          <button class="seg-btn active" id="count10Btn" type="button">10</button>
+          <button class="seg-btn" id="count15Btn" type="button">15</button>
+          <button class="seg-btn" id="countAllBtn" type="button" data-i18n="countAll">Tümü</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupTime">Süre</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="timeOffBtn" type="button" data-i18n="timeOff">Kapalı</button>
+          <button class="seg-btn" id="time2Btn" type="button">2 dk</button>
+          <button class="seg-btn" id="time5Btn" type="button">5 dk</button>
+          <button class="seg-btn" id="time10Btn" type="button">10 dk</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="setupStartBtn" type="button" data-i18n="startTest">Teste Başla</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="debugModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="debugSetupTitle">Bug Hunter Ayarla</h3>
+        <button class="icon-btn" id="debugClose" type="button" title="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <p class="modal-text" id="debugPoolLabel">Başlangıç · 10 soru</p>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupLevel">Seviye</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="debugLvlBeginner" type="button">Başlangıç</button>
+          <button class="seg-btn" id="debugLvlIntermediate" type="button">Orta</button>
+          <button class="seg-btn" id="debugLvlAdvanced" type="button">İleri</button>
+          <button class="seg-btn" id="debugLvlExpert" type="button">Uzman</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupMode">Mod</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="debugModeClassicBtn" type="button" data-i18n="modeClassic">Klasik</button>
+          <button class="seg-btn" id="debugModeExamBtn" type="button" data-i18n="modeExam">Sınav</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="setupCount">Soru Sayısı</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn" id="debugCount5Btn" type="button">5</button>
+          <button class="seg-btn active" id="debugCount10Btn" type="button">10</button>
+          <button class="seg-btn" id="debugCountAllBtn" type="button" data-i18n="countAll">Tümü</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="debugStartBtn" type="button" data-i18n="startTest">Teste Başla</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="statsModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="statsTitle">İstatistikler</h3>
+        <button class="icon-btn" id="statsClose" type="button" title="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div id="statsContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="helpModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="helpTitle">Nasıl oynanır?</h3>
+        <button class="icon-btn" id="helpClose" type="button" title="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <p class="modal-text" data-i18n="helpIntro">ArenaKali, siber güvenlik öğrenenler için Linux komutlarını, filtreleri ve yetki yükseltme mantığını test eden bir pratik aracıdır.</p>
+      <div class="review-item" style="margin-bottom:12px;">
+        <strong style="color:var(--accent);">TERMINAL QUIZ</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Ekranda görünen Linux komutunun, pipe zincirinin veya script'inin sonucunu tahmin et.</p>
+      </div>
+      <div class="review-item" style="margin-bottom:12px;">
+        <strong style="color:var(--amber);">BUG & EXPLOIT HUNTER</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Komuttaki ölümcül syntax hatalarını, tırnak eksikliklerini ve yetki zafiyetlerini dedektif gibi bul.</p>
+      </div>
+      <div class="review-item" style="margin-bottom:12px;">
+        <strong style="color:var(--green);">KALI WEB TERMINAL</strong>
+        <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">Üst bardaki terminal simgesiyle interaktif kabuğu aç. /etc/shadow, /var/log/auth.log ve /root/root.txt dosyalarını içeren sanal dosya sisteminde pratik yap!</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-backdrop hidden" id="installModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="installTitle">
+      <div class="modal-head">
+        <h3 id="installTitle" data-i18n="installApp">Uygulamayı Yükle</h3>
+        <button class="icon-btn" id="installClose" type="button" title="Kapat" aria-label="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <p class="modal-text" data-i18n="installIntro">ArenaKali'yi ana ekranına uygulama gibi ekleyebilirsin; çevrimdışı da çalışır.</p>
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="installAndroidTitle">Android / Desktop (Chrome & Edge)</span>
+          <span class="setting-desc" data-i18n="installAndroidDesc">Adres çubuğundaki 'Yükle' simgesine veya tarayıcı menüsünden 'Uygulamayı yükle'ye dokun.</span>
+        </div>
+      </div>
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="installIosTitle">iPhone / iPad (Safari)</span>
+          <span class="setting-desc" data-i18n="installIosDesc">Paylaş düğmesine dokun ve 'Ana Ekrana Ekle' seçeneğini seç.</span>
+        </div>
+      </div>
+      <p class="modal-text" data-i18n="installNote" style="font-size:0.8rem; color:var(--text-dim); margin-top:14px;">İpucu: Sayfayı doğrudan tarayıcıda açtığında PWA olarak tam ekran kurulabilir.</p>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 data-i18n="settingsTitle">Ayarlar</h3>
+        <button class="icon-btn" id="settingsClose" type="button" title="Kapat">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="settingsTheme">Tema</span>
+          <span class="setting-desc" data-i18n="settingsThemeDesc">Koyu Kali veya açık tema</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="themeDarkBtn" type="button" data-i18n="themeDark">Koyu</button>
+          <button class="seg-btn" id="themeLightBtn" type="button" data-i18n="themeLight">Açık</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="settingsLanguage">Dil</span>
+          <span class="setting-desc" data-i18n="settingsLanguageDesc">Türkçe veya English</span>
+        </div>
+        <div class="segmented">
+          <button class="seg-btn active" id="langTrBtn" type="button">Türkçe</button>
+          <button class="seg-btn" id="langEnBtn" type="button">English</button>
+        </div>
+      </div>
+
+      
+      <div class="setting-row" id="installRow">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="installApp">Uygulamayı Yükle</span>
+          <span class="setting-desc" data-i18n="installIntro">ArenaKali'yi ana ekrana ekle; çevrimdışı çalışır</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="installBtn" type="button" data-i18n="installApp">Yükle</button>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <span class="setting-label" data-i18n="settingsReset">Skorları Sıfırla</span>
+          <span class="setting-desc" data-i18n="settingsResetDesc">Tüm XP ve rekorları temizle</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="resetBestBtn" type="button" data-i18n="resetBtn">Sıfırla</button>
+      </div>
+
+      <p class="settings-feedback hidden" id="settingsFeedback"></p>
+    </div>
+  </div>
+
+  <script src="questions.js" defer></script>
+  <script src="debug_questions.js" defer></script>
+  <script src="terminal-engine.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

