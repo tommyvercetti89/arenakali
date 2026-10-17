@@ -1,4 +1,4 @@
-const CACHE = "arenakali-v2";
+const CACHE = "arenakali-v3";
 
 const ASSETS = [
   "./",

@@ -1,3 +1,6 @@
+// ArenaKali Question Pool - Linux & Cyber Security Logic
+// 150 high quality bilingual questions covering Linux CLI, Filtering, Forensics, Networking, and Privilege Escalation
+
 const ERR = { tr: "Sözdizimi / Komut hatası verir", en: "Syntax / Command error" };
 
 const TOPICS = {
@@ -647,6 +650,330 @@ const QUESTIONS = {
         "tr": "Linux'taki çalıştırılabilir ikili dosyalar (executable binary) Windows'taki PE/EXE gibi 'ELF' (Executable and Linkable Format) başlığı taşır. 'file' komutu bunu tespit eder.",
         "en": "Linux executables use ELF (Executable and Linkable Format). 'file /bin/bash' identifies it as an ELF binary."
       }
+    },
+    {
+      "topic": "basics",
+      "code": "which nmap",
+      "options": [
+        {
+          "tr": "Nmap tarayıcısını hemen arka planda başlatır",
+          "en": "Immediately launches the Nmap scanner in the background"
+        },
+        {
+          "tr": "Çalıştırılabilir 'nmap' ikili dosyasının mutlak yolunu (örn: /usr/bin/nmap) basar",
+          "en": "Prints the absolute path of the executable 'nmap' binary (e.g. /usr/bin/nmap)"
+        },
+        {
+          "tr": "Nmap paketini APT deposundan indirip kurar",
+          "en": "Downloads and installs the Nmap package from the APT repo"
+        },
+        {
+          "tr": "Nmap'in lisans ve sürüm numarasını kontrol eder",
+          "en": "Checks Nmap license and version number"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'which' komutu, kabukta aranan programın $PATH ortam değişkenindeki çalıştırılabilir tam yolunu döndürür. Siber güvenlikte sistemde hangi keşif araçlarının yüklü olduğunu doğrulamak için sıkça kullanılır.",
+        "en": "'which' locates executable binaries within $PATH directories. In security assessments, it quickly verifies if specific reconnaissance tools are present."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "uname -r",
+      "options": [
+        {
+          "tr": "Bilgisayarın ana kart seri numarasını görüntüler",
+          "en": "Displays computer motherboard serial number"
+        },
+        {
+          "tr": "Mevcut RAM miktarını ve önbellek boyutunu gösterir",
+          "en": "Displays current RAM amount and cache size"
+        },
+        {
+          "tr": "Çalışan Linux çekirdeğinin (kernel) sürüm numarasını basar",
+          "en": "Prints the running Linux kernel release version"
+        },
+        {
+          "tr": "Sistemi güvenli modda yeniden başlatır",
+          "en": "Reboots the system in safe mode"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "uname -r, çalışan çekirdek sürümünü (örn: 6.8.0-kali1-amd64) gösterir. Siber güvenlik testlerinde, sistemin bilinen bir Kernel Privilege Escalation (çekirdek yetki yükseltme) zafiyetine sahip olup olmadığını anlamanın ilk adımıdır.",
+        "en": "'uname -r' prints the active Linux kernel release version. Vital in penetration testing to determine vulnerability to known local kernel exploits."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "cat /etc/shells",
+      "options": [
+        {
+          "tr": "Sistemde kurulu ve geçerli kabul edilen oturum kabuklarını (bash, sh, zsh vb.) listeler",
+          "en": "Lists valid login shells installed on the system (bash, sh, zsh, etc.)"
+        },
+        {
+          "tr": "Sistemdeki tüm açık arka kapı kabuklarını (reverse shells) tespit eder",
+          "en": "Detects all open backdoor shells on the system"
+        },
+        {
+          "tr": "Mevcut kullanıcının şifreli parolasını ekrana yazdırır",
+          "en": "Prints current user's encrypted password"
+        },
+        {
+          "tr": "Kullanıcı için varsayılan kabuğu root kabuğuyla değiştirir",
+          "en": "Changes default shell to root shell"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "/etc/shells, sistemde oturum açmak için güvenli ve geçerli sayılan kabukların listesidir. Güvenlik analizinde bir kullanıcının kabuğunun /bin/false veya /usr/sbin/nologin olması, interaktif oturum izninin kısıtlandığını gösterir.",
+        "en": "/etc/shells lists valid login shells. In security auditing, accounts assigned /bin/false or /usr/sbin/nologin indicate non-interactive service accounts."
+      }
+    },
+    {
+      "topic": "permissions",
+      "code": "ls -ld /tmp",
+      "options": [
+        {
+          "tr": "/tmp dizininin içindeki tüm dosyaları gizli dosyalarla birlikte siler",
+          "en": "Deletes all files inside /tmp including hidden files"
+        },
+        {
+          "tr": "/tmp klasörünü geçici bellekten (RAM disk) kaldırır",
+          "en": "Removes /tmp from temporary RAM disk"
+        },
+        {
+          "tr": "/tmp dizinini salt okunur (read-only) hale getirir",
+          "en": "Makes /tmp directory read-only"
+        },
+        {
+          "tr": "/tmp dizininin kendisinin izinlerini (drwxrwxrwt) ve sticky bit bayrağını listeler",
+          "en": "Lists permissions of /tmp itself (drwxrwxrwt) including the sticky bit flag"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "-d parametresi klasörün içeriğini değil, klasörün kendisini listeler. /tmp dizininde 't' harfi Sticky Bit'i temsil eder; bu sayede herkes bu dizinde dosya oluşturabilir ancak sadece dosya sahibi veya root kendi dosyasını silebilir.",
+        "en": "The -d flag lists directory properties itself instead of contents. The 't' indicates the Sticky Bit, preventing users from deleting other users' temporary files."
+      }
+    },
+    {
+      "topic": "process",
+      "code": "uptime",
+      "options": [
+        {
+          "tr": "İnternet bağlantısının indirme ve yükleme hızını test eder",
+          "en": "Tests internet connection download and upload speeds"
+        },
+        {
+          "tr": "Sistemin ne kadar süredir açık olduğunu, kullanıcı sayısını ve yük ortalamalarını (load average) basar",
+          "en": "Prints system uptime, logged-in user count, and load averages"
+        },
+        {
+          "tr": "Sistem saatini ağ zaman sunucusuyla (NTP) senkronize eder",
+          "en": "Synchronizes system clock with NTP server"
+        },
+        {
+          "tr": "İşlemci sıcaklığını ve fan devrini gösterir",
+          "en": "Displays CPU temperature and fan speed"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'uptime' komutu sistemin ne zaman açıldığını, aktif kaç kullanıcının bağlı olduğunu ve son 1, 5, 15 dakikalık CPU yük ortalamasını gösterir. Sunucu performansı ve sızma sonrası keşif (post-exploitation) için temel bir komuttur.",
+        "en": "'uptime' reveals how long the system has been running, user count, and load averages for 1, 5, and 15 minutes, useful during system profiling."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "echo $PATH",
+      "options": [
+        {
+          "tr": "Oturum açan kullanıcının şifrelenmiş parolasını görüntüler",
+          "en": "Displays encrypted password of current user"
+        },
+        {
+          "tr": "Mevcut ağdaki yönlendirme yollarını (routing paths) listeler",
+          "en": "Lists routing paths in the current network"
+        },
+        {
+          "tr": "Komut satırında yazılan programların arandığı dizinler listesini iki nokta (:) ile ayrılmış basar",
+          "en": "Prints colon-separated directory list where the shell searches for executable commands"
+        },
+        {
+          "tr": "Mevcut oturumun çalıştığı mutlak dosya yolu adresini sıfırlar",
+          "en": "Resets the current working directory path"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "$PATH ortam değişkeni, terminale bir komut yazıldığında ikili dosyanın sırayla hangi dizinlerde aranacağını belirler. Saldırganlar yerel dizini $PATH'in başına ekleyerek 'PATH Hijacking' yetki yükseltme saldırısı yapabilirler.",
+        "en": "$PATH lists directories searched for executable binaries. Misconfigured PATH variables (e.g. containing writable dirs or '.') can lead to PATH Hijacking attacks."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "file malicious.pdf",
+      "options": [
+        {
+          "tr": "Dosya uzantısına bakmaksızın dosyanın sihirli baytlarını (magic bytes) okuyarak gerçek dosya türünü belirler",
+          "en": "Reads magic bytes to determine true file type regardless of file extension"
+        },
+        {
+          "tr": "PDF dosyasını varsayılan PDF görüntüleyicide açar",
+          "en": "Opens the PDF in default PDF viewer"
+        },
+        {
+          "tr": "PDF dosyasının şifresini brute-force ile kırmaya çalışır",
+          "en": "Attempts to brute-force the PDF password"
+        },
+        {
+          "tr": "Dosyadaki satır ve kelime sayısını hesaplar",
+          "en": "Counts lines and words in the file"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "'file' komutu dosya uzantısını yok sayar ve başlığındaki 'magic numbers' (örneğin %PDF- veya ELF başlığı) değerlerini inceler. Saldırganlar zararlı çalıştırılabilirleri '.pdf' veya '.png' gibi uzantılarla gizlediğinde tespitte kritiktir.",
+        "en": "'file' examines magic bytes rather than file extensions. Essential in forensics to detect disguised executables masquerading as documents or images."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "df -h",
+      "options": [
+        {
+          "tr": "Bellekteki gereksiz dosyaları ve çöpleri siler",
+          "en": "Deletes junk files and cleans RAM"
+        },
+        {
+          "tr": "Ağ arabirimlerinin paket transfer oranlarını gösterir",
+          "en": "Shows packet transfer rates on network interfaces"
+        },
+        {
+          "tr": "Sabit diski yeniden biçimlendirir (format)",
+          "en": "Formats the hard disk drive"
+        },
+        {
+          "tr": "Bağlı dosya sistemlerinin disk alanı kullanımını okunabilir birimlerle (GB/MB) raporlar",
+          "en": "Reports filesystem disk usage in human-readable units (GB/MB)"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "'df -h' (Disk Free - Human readable), diskteki toplam, kullanılan ve boş alanları GB/MB cinsinden listeler. Adli bilişimde ve log taşması analizlerinde hızlı durum değerlendirmesi sağlar.",
+        "en": "'df -h' reports total, used, and available disk space in human-readable formats (GB/MB), useful in disk auditing and post-exploitation."
+      }
+    },
+    {
+      "topic": "piping",
+      "code": "wc -l /etc/passwd",
+      "options": [
+        {
+          "tr": "/etc/passwd dosyasındaki kullanıcı şifrelerini kontrol eder",
+          "en": "Checks user passwords in /etc/passwd"
+        },
+        {
+          "tr": "/etc/passwd dosyasındaki toplam satır (hesap) sayısını sayar ve yazdırır",
+          "en": "Counts and prints total number of lines (user accounts) in /etc/passwd"
+        },
+        {
+          "tr": "Tüm kullanıcıların isimlerini küçük harfe dönüştürür",
+          "en": "Converts all usernames to lowercase"
+        },
+        {
+          "tr": "Parola dosyasındaki boşlukları temizler",
+          "en": "Cleans up whitespace in the password file"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'wc -l' (Word Count - Lines), verilen dosyadaki yeni satır karakterlerini sayar. /etc/passwd dosyasında her satır bir hesabı temsil ettiğinden sistemdeki toplam kullanıcı sayısını verir.",
+        "en": "'wc -l' counts newline characters. Because each line in /etc/passwd defines an account, it outputs the total number of system accounts."
+      }
+    },
+    {
+      "topic": "permissions",
+      "code": "groups",
+      "options": [
+        {
+          "tr": "Oturum açan mevcut kullanıcının üyesi olduğu tüm kullanıcı gruplarını ekrana basar",
+          "en": "Prints all user group memberships of the current logged-in user"
+        },
+        {
+          "tr": "Sistemde 'groups' adında yeni bir kullanıcı grubu tanımlar",
+          "en": "Defines a new user group named 'groups' on the system"
+        },
+        {
+          "tr": "Dosya sistemindeki tüm grup ID'lerini (GID) sıfırlar",
+          "en": "Resets all group IDs (GID) across the filesystem"
+        },
+        {
+          "tr": "Kullanıcıyı sudoers grubundan derhal çıkarır",
+          "en": "Immediately removes user from the sudoers group"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "'groups' komutu, kullanıcının dahil olduğu ikincil grupları gösterir. Siber güvenlik testlerinde kullanıcının 'sudo', 'docker', 'lxd' veya 'disk' gibi yetki yükseltmeye (privesc) elverişli gruplarda olup olmadığını anlamak için ilk çalıştırılan komutlardandır.",
+        "en": "'groups' displays all group memberships of current user. Crucial in privilege escalation discovery to spot sensitive groups like sudo, docker, lxd, or disk."
+      }
+    },
+    {
+      "topic": "networking",
+      "code": "hostname -I",
+      "options": [
+        {
+          "tr": "DNS sunucusuna ters arama (reverse lookup) gönderir",
+          "en": "Sends reverse DNS lookup request to DNS server"
+        },
+        {
+          "tr": "Bilgisayarın ana kart seri numarasını görüntüler",
+          "en": "Displays computer motherboard serial number"
+        },
+        {
+          "tr": "Sistemin yerel ve yönlendirilebilir tüm ağ IP adreslerini basar",
+          "en": "Prints all network host IP addresses assigned to system interfaces"
+        },
+        {
+          "tr": "Kablosuz Wi-Fi kartını izleme (monitor) moduna alır",
+          "en": "Puts wireless Wi-Fi card into monitor mode"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "'hostname -I', ana makineye atanmış olan tüm IPv4/IPv6 ağ adreslerini tek satırda listeler. ifconfig veya ip a komutlarının çıktısını ayrıştırmadan hızlıca yerel IP'yi öğrenmek için idealdir.",
+        "en": "'hostname -I' lists all assigned IP addresses across all network interfaces, providing a quick way to discover local IP addresses."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "cp -a /var/www/html /backup/html",
+      "options": [
+        {
+          "tr": "Dosyaları yalnızca metin biçiminde kopyalar",
+          "en": "Copies files only in plain text format"
+        },
+        {
+          "tr": "Kaynak dosyaları kopyaladıktan sonra derhal siler",
+          "en": "Deletes source files immediately after copying"
+        },
+        {
+          "tr": "Kopyalama yapmadan önce dosyaları gzip ile sıkıştırır",
+          "en": "Compresses files with gzip before copying"
+        },
+        {
+          "tr": "Arşivleme moduyla; tüm sahiplik, izin, zaman damgası ve sembolik bağları koruyarak kopyalar",
+          "en": "Archive copy; preserves all ownership, permissions, timestamps, and symbolic links"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "cp -a (archive), -dR --preserve=all seçeneklerinin bileşimidir. Adli bilişim kopyalarında ve yedeklemelerde dosya özniteliklerinin (mtime, ctime, uid, gid) bozulmaması için kullanılır.",
+        "en": "'cp -a' (archive) preserves ownership, permissions, symlinks, and timestamps, essential during forensic image acquisition and backups."
+      }
     }
   ],
   "intermediate": [
@@ -1245,6 +1572,357 @@ const QUESTIONS = {
       "explanation": {
         "tr": "lsof (List Open Files) Linux'ta her şey bir dosyadır mantığıyla çalışır. -i :80 parametresi ağ soketlerinden 80. portu kullanan işlem adı ve PID'yi detaylıca gösterir.",
         "en": "lsof (List Open Files) with -i :80 inspects network sockets currently bound to port 80."
+      }
+    },
+    {
+      "topic": "piping",
+      "code": "grep -v '^#' /etc/ssh/sshd_config | grep -v '^$'",
+      "options": [
+        {
+          "tr": "SSH sunucusunun tüm şifreleme anahtarlarını siler",
+          "en": "Deletes all encryption keys from the SSH server"
+        },
+        {
+          "tr": "Yorum satırlarını (#) ve boş satırları eleyerek yalnızca aktif SSH yapılandırma direktiflerini gösterir",
+          "en": "Filters out comment lines (#) and blank lines, showing only active SSH configuration directives"
+        },
+        {
+          "tr": "SSH yapılandırmasındaki tüm satırları yorum satırına çevirir",
+          "en": "Converts all SSH configuration lines into comments"
+        },
+        {
+          "tr": "Geçersiz SSH kurallarını tespit edip otomatik düzeltir",
+          "en": "Detects invalid SSH rules and fixes them automatically"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'grep -v' eşleşmeyen satırları döndürür. '^#' satır başındaki yorumları, '^$' ise boş satırları eler. Sistem sıkılaştırma (hardening) ve güvenlik denetimlerinde konfigürasyonları hızlıca okumak için standart tekniktir.",
+        "en": "grep -v inverts matches. '^#' matches comments and '^$' matches empty lines. This displays pure active configuration settings during security audits."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "cut -d: -f1,3 /etc/passwd | grep ':0$'",
+      "options": [
+        {
+          "tr": "Şifresi '0' olan zayıf kullanıcı hesaplarını listeler",
+          "en": "Lists weak user accounts whose password is '0'"
+        },
+        {
+          "tr": "Kullanıcıların oturum açma sayısını sıfırlar",
+          "en": "Resets the login counts of users"
+        },
+        {
+          "tr": "Kullanıcı adını ve UID'yi ayırıp UID değeri 0 olan (root yetkili) hesapları bulur",
+          "en": "Extracts username and UID, filtering for accounts with UID 0 (root-level privilege)"
+        },
+        {
+          "tr": "Sistemde kayıtlı sıfır baytlık dosyaları tespit eder",
+          "en": "Detects zero-byte files registered in the system"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "Linux'ta UID 0 demek root yetkisi demektir. Bir saldırgan sisteme sızdığında sahte bir 'toor' veya 'admin' kullanıcısı açıp UID'sini 0 yaparak gizli bir root hesabı oluşturmuş olabilir. Bu komut o gizli hesapları ortaya çıkarır.",
+        "en": "UID 0 grants root privileges regardless of the username. Attackers may create backdoor accounts with UID 0; this command instantly exposes them."
+      }
+    },
+    {
+      "topic": "networking",
+      "code": "ss -tulnp | grep ':80 '",
+      "options": [
+        {
+          "tr": "Sistemde 80 numaralı TCP portunu dinleyen yerel süreci ve PID/program adını listeler",
+          "en": "Lists the local listening process and PID/program name bound to TCP port 80"
+        },
+        {
+          "tr": "Dışarıdaki bir web sunucusunun 80. portunu Nmap ile tarar",
+          "en": "Scans port 80 of an external web server using Nmap"
+        },
+        {
+          "tr": "80. port üzerindeki tüm gelen HTTP paketlerini engeller",
+          "en": "Blocks all incoming HTTP packets on port 80"
+        },
+        {
+          "tr": "Web tarayıcısını 80. port üzerinden arka planda başlatır",
+          "en": "Launches web browser in the background over port 80"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "'ss -tulnp' (tcp, udp, listening, numeric, processes), soket istatistiklerini ve hangi portun hangi PID tarafından dinlendiğini gösterir. Beklenmeyen bir web sunucusu veya ters kabuk dinleyicisini tespit etmekte çok etkilidir.",
+        "en": "'ss -tulnp' reveals active listening sockets along with process names and PIDs, crucial for detecting rogue services and backdoors."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "tail -f /var/log/auth.log",
+      "options": [
+        {
+          "tr": "auth.log dosyasını baştan sona ekrana döker ve dosyayı kilitler",
+          "en": "Dumps auth.log from start to end and locks the file"
+        },
+        {
+          "tr": "Başarısız giriş denemesi yapan tüm IP'leri iptables ile banlar",
+          "en": "Bans all failed login IPs using iptables"
+        },
+        {
+          "tr": "Yetkisiz oturum açma log kayıtlarını temizler",
+          "en": "Cleans unauthorized login audit records"
+        },
+        {
+          "tr": "SSH, sudo ve kullanıcı kimlik doğrulama loglarını terminalde canlı ve eşzamanlı izler",
+          "en": "Monitors SSH, sudo, and authentication logs in real time as they are written"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "-f (follow) parametresi, log dosyasına yeni satırlar yazıldıkça terminale canlı olarak basılmasını sağlar. Blue Team analistleri canlı brute-force saldırılarını veya yetkisiz sudo kullanımlarını bu komutla izler.",
+        "en": "'tail -f' streams log entries in real-time. Security analysts use this to observe active brute-force attempts and suspicious privilege delegations."
+      }
+    },
+    {
+      "topic": "process",
+      "code": "ps aux --sort=-%mem | head -n 6",
+      "options": [
+        {
+          "tr": "Belleği aşırı tüketen ilk 5 işlemi derhal sonlandırır (kill)",
+          "en": "Immediately terminates (kills) the top 5 memory-hogging processes"
+        },
+        {
+          "tr": "En çok bellek (RAM) tüketen ilk 5 süreci başlık satırıyla birlikte listeler",
+          "en": "Lists the top 5 memory-consuming processes along with the header line"
+        },
+        {
+          "tr": "İşlemciyi (CPU) en çok kullanan işlemleri yüzdelerine göre sıralar",
+          "en": "Sorts processes by CPU usage percentage"
+        },
+        {
+          "tr": "Sanal bellek (SWAP) alanını temizleyip yeniden başlatır",
+          "en": "Flushes and restarts the virtual swap memory space"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "ps aux çıktısı --sort=-%mem ile belleğe göre azalan sırada dizilir. head -n 6, tablonun başlık satırı ile birlikte en çok RAM tüketen ilk 5 süreci görmeyi sağlar. Sistem kaynaklarını sömüren kripto madencilerini (cryptominer) tespit etmede yararlıdır.",
+        "en": "'ps aux --sort=-%mem | head -n 6' sorts processes by memory consumption descending. Ideal for spotting rogue cryptominers or resource-heavy processes."
+      }
+    },
+    {
+      "topic": "permissions",
+      "code": "chmod 700 ~/.ssh && chmod 600 ~/.ssh/id_rsa",
+      "options": [
+        {
+          "tr": ".ssh klasörünü yalnızca sahibine tam yetkili, private key'i ise yalnızca sahibine okuma/yazma yetkili yapar",
+          "en": "Restricts .ssh dir to owner rwx only, and private key id_rsa to owner rw only"
+        },
+        {
+          "tr": "SSH anahtarlarını tüm kullanıcılara okuma hakkı vererek paylaşıma açar",
+          "en": "Makes SSH keys readable to all users on the system"
+        },
+        {
+          "tr": "Yeni bir 4096-bit RSA SSH anahtar çifti üretir",
+          "en": "Generates a new 4096-bit RSA SSH keypair"
+        },
+        {
+          "tr": "Sunucuya SSH ile root oturumu açılmasını zorunlu kılar",
+          "en": "Enforces root login over SSH"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "OpenSSH istemcisi, özel anahtar (id_rsa) izinleri fazla genişse (örn: 644 veya başkaları okuyabiliyorsa) güvenlik nedeniyle anahtarı reddeder ('Permissions 0644 for id_rsa are too open'). 700 ve 600 zorunlu güvenlik standartlarıdır.",
+        "en": "OpenSSH strictly rejects private keys with permissive permissions. 700 for ~/.ssh and 600 for ~/.ssh/id_rsa enforce proper owner-only confidentiality."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "tar -czvf backup.tar.gz /var/log",
+      "options": [
+        {
+          "tr": "/var/log dizinindeki logları silip yerlerine sıkıştırılmış arşiv dosyası açar",
+          "en": "Deletes logs in /var/log and extracts an archive in their place"
+        },
+        {
+          "tr": "backup.tar.gz arşivini doğrudan /var/log dizinine açar (extract)",
+          "en": "Extracts backup.tar.gz directly into /var/log"
+        },
+        {
+          "tr": "/var/log dizinini gzip ile sıkıştırarak 'backup.tar.gz' adında bir arşiv oluşturur",
+          "en": "Creates a gzip-compressed archive named 'backup.tar.gz' containing /var/log"
+        },
+        {
+          "tr": "Log dosyalarının MD5 doğrulama özetlerini hesaplar",
+          "en": "Computes MD5 verification checksums for log files"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "-c (create), -z (gzip), -v (verbose), -f (file). Bu bayrak kombinasyonu hedef dizini paketler ve sıkıştırır. Adli bilişimde kanıtların ve logların taşınabilir bir arşivde toplanması için sıkça kullanılır.",
+        "en": "-c (create), -z (gzip), -v (verbose), -f (file) bundles and compresses directories into an archive, standard for evidence preservation and backups."
+      }
+    },
+    {
+      "topic": "bash_scripting",
+      "code": "sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config",
+      "options": [
+        {
+          "tr": "Dosyayı değiştirmeden ekrana sadece test çıktısı verir",
+          "en": "Prints test output without modifying the original file"
+        },
+        {
+          "tr": "Root şifresini tamamen sıfırlar ve SSH servisini durdurur",
+          "en": "Resets root password and stops the SSH service"
+        },
+        {
+          "tr": "Dosyadaki tüm 'PermitRootLogin' satırlarını siler",
+          "en": "Deletes all 'PermitRootLogin' lines from the file"
+        },
+        {
+          "tr": "SSH yapılandırma dosyasında root oturum iznini 'no' yaparak doğrudan dosya üzerinde (-i) kalıcı günceller",
+          "en": "Modifies /etc/ssh/sshd_config in-place (-i) disabling root login ('PermitRootLogin no')"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "sed -i (in-place), dosya üzerinde doğrudan düzenleme yapar. 'PermitRootLogin no' ayarı, doğrudan root olarak SSH oturumu açılmasını engelleyerek sunucu güvenliğini artıran en temel sıkılaştırma adımlarındandır.",
+        "en": "'sed -i' modifies files in place. Setting 'PermitRootLogin no' blocks direct remote root SSH authentication, enforcing principle of least privilege."
+      }
+    },
+    {
+      "topic": "piping",
+      "code": "awk -F: '$3 >= 1000 {print $1, $3}' /etc/passwd",
+      "options": [
+        {
+          "tr": "Sistemdeki normal kullanıcıların (UID >= 1000) kullanıcı adlarını ve UID değerlerini yazdırır",
+          "en": "Prints username and UID of human regular user accounts (UID >= 1000)"
+        },
+        {
+          "tr": "Yalnızca root ve sistem servis hesaplarını listeler",
+          "en": "Lists only root and system service daemon accounts"
+        },
+        {
+          "tr": "Kullanıcıların parola uzunluklarını hesaplar",
+          "en": "Calculates the password lengths of users"
+        },
+        {
+          "tr": "1000'den büyük dosyaları arayıp siler",
+          "en": "Finds and removes files larger than 1000 bytes"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "Linux dağıtımlarında normal insan kullanıcıların UID değerleri genellikle 1000'den başlar (Debian/Ubuntu/Kali). -F: ile iki nokta ayracı kullanılarak 3. sütundaki UID değeri filtrelenir.",
+        "en": "On modern Linux distros, human interactive user accounts start at UID 1000+. This awk filter isolates user accounts from low-UID system daemons."
+      }
+    },
+    {
+      "topic": "networking",
+      "code": "netstat -rn",
+      "options": [
+        {
+          "tr": "Ağdaki tüm aktif istemcilerin MAC adreslerini tarar",
+          "en": "Scans MAC addresses of all active clients on the subnet"
+        },
+        {
+          "tr": "Çekirdek yönlendirme tablosunu (routing table) IP adreslerini çözmeden sayısal formatta (-n) gösterir",
+          "en": "Displays kernel routing table with numeric IP addresses (-n) without DNS resolution"
+        },
+        {
+          "tr": "Yönlendiriciyi (router) uzaktan yeniden başlatır",
+          "en": "Remotely reboots the local gateway router"
+        },
+        {
+          "tr": "Varsayılan ağ geçidini kaldırır",
+          "en": "Deletes the default network gateway"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'netstat -rn', sistemin hangi ağ trafiğini hangi ağ geçidine (Gateway) ve hangi arabirime yönlendirdiğini sayısal IP olarak gösterir. VPN sızıntılarını ve yönlendirme manipülasyonlarını analiz etmede kullanılır.",
+        "en": "'netstat -rn' prints kernel routing tables numerically without resolving hostnames, essential for routing inspection and VPN gateway verification."
+      }
+    },
+    {
+      "topic": "basics",
+      "code": "find /home -maxdepth 2 -name \"*.conf\"",
+      "options": [
+        {
+          "tr": "/home dizinindeki tüm ayar dosyalarını 2 parçaya böler",
+          "en": "Splits all configuration files in /home into 2 parts"
+        },
+        {
+          "tr": "Tüm dosya sistemini tarayıp 2 baytlık konfigürasyonları bulur",
+          "en": "Scans entire filesystem looking for 2-byte config files"
+        },
+        {
+          "tr": "/home altında en fazla 2 dizin derinliğine inerek '.conf' uzantılı dosyaları arar",
+          "en": "Searches /home limiting traversal depth to 2 directories for files ending in '.conf'"
+        },
+        {
+          "tr": "/home altındaki 2 günden eski dosyaları listeler",
+          "en": "Lists files older than 2 days under /home"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "-maxdepth parametresi arama derinliğini kısıtlar. Bu sayede büyük dosya sistemlerinde gereksiz I/O tüketmeden hızlıca hedeflenen kullanıcı dizini derinliğindeki dosyalar bulunur.",
+        "en": "'-maxdepth' limits recursive directory traversal depth, preventing excessive disk I/O when hunting for sensitive configuration files."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "curl -s -I https://example.com | grep -i 'server:'",
+      "options": [
+        {
+          "tr": "Web sitesinin kaynak kodunu komple indirip virüs taramasından geçirir",
+          "en": "Downloads entire HTML source and runs an antivirus scan"
+        },
+        {
+          "tr": "Hedef sitenin DNS kayıtlarını ele geçirir",
+          "en": "Hijacks DNS records of the target domain"
+        },
+        {
+          "tr": "Sunucudaki SSL sertifikasını geçersiz kılar",
+          "en": "Invalidates the SSL certificate on the server"
+        },
+        {
+          "tr": "Web sunucusuna sessizce sadece HTTP başlıklarını sorar ve çalışan web sunucu banner bilgisini ayıklar",
+          "en": "Silently fetches only HTTP response headers and extracts the web server banner string"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "-s (silent), -I (HEAD request). Sadece HTTP başlıklarını çekerek 'Server: nginx/1.18.0' veya 'Apache/2.4.41' gibi banner bilgilerini ortaya çıkarır. Sızma testlerinde zafiyet araştırması için ilk bilgi toplama adımıdır.",
+        "en": "'curl -s -I' sends an HTTP HEAD request without downloading content. Grepping 'server:' extracts the web server software and version banner."
+      }
+    },
+    {
+      "topic": "networking",
+      "code": "ip link set eth0 promisc on",
+      "options": [
+        {
+          "tr": "eth0 ağ kartını karma (promiscuous) moda alarak karta gelen tüm ağ paketlerini dinlemeye açar (sniffing)",
+          "en": "Enables promiscuous mode on eth0, allowing packet sniffing of all wire traffic"
+        },
+        {
+          "tr": "eth0 arabirimini kapatıp internet erişimini keser",
+          "en": "Shuts down eth0 interface cutting network access"
+        },
+        {
+          "tr": "eth0 kartına rastgele yeni bir MAC adresi atar",
+          "en": "Assigns a random new MAC address to eth0"
+        },
+        {
+          "tr": "Ağ arabiriminin güvenlik duvarı kurallarını sıfırlar",
+          "en": "Flushes network interface firewall rules"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "Normalde ağ kartları yalnızca kendi MAC adreslerine veya broadcast'e gelen paketleri işler. 'promisc on' yapıldığında kart ağdaki tüm paketleri yakalar (Wireshark/tcpdump koklama modu).",
+        "en": "Promiscuous mode instructs the NIC to pass all network traffic on the segment to the CPU rather than only packets addressed to its own MAC address."
       }
     }
   ],
@@ -1910,6 +2588,330 @@ const QUESTIONS = {
       "explanation": {
         "tr": "ls komutuna -i (inode) parametresi verildiğinde ilk sütuna dosyanın dosya sistemindeki benzersiz indeks numarası (inode) yazılır. Adli bilişimde dosya kimliğini doğrulamak için kullanılır.",
         "en": "ls -i outputs the file's filesystem inode identifier in column 1, used in forensics to track underlying file identities."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "nmap -sV -sC -p 21,22,80,443 -oN scan.txt 10.10.10.50",
+      "options": [
+        {
+          "tr": "Hedef sunucuya 443 portundan şifreli DoS saldırısı başlatır",
+          "en": "Launches an encrypted DoS attack on port 443 against the target"
+        },
+        {
+          "tr": "Belirtilen 4 portta servis sürümü tespiti ve varsayılan NSE script'lerini çalıştırıp sonucu scan.txt dosyasına kaydeder",
+          "en": "Performs service version detection and default NSE script scans on 4 ports, saving output to scan.txt"
+        },
+        {
+          "tr": "Hedef makinenin root parolasını brute-force ile kırar",
+          "en": "Brute-forces the root password of target machine"
+        },
+        {
+          "tr": "Hedefin güvenlik duvarını atlamak için IP spoofing yapar",
+          "en": "Performs IP spoofing to bypass the target firewall"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "-sV (Version detection), -sC (Default scripts), -oN (normal output format). Siber güvenlik taramalarında hedef portlardaki yazılım sürümlerini ve bilinen açıkları belgelemek için standart kombinasyondur.",
+        "en": "-sV probes open ports for software/version info; -sC runs default NSE security scripts; -oN writes clean readable output for penetration test reports."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "tcpdump -i any -nn \"port 53\" -w dns.pcap",
+      "options": [
+        {
+          "tr": "DNS sunucusunu sahte yanıtlarla zehirler (cache poisoning)",
+          "en": "Poisons the DNS server with spoofed responses (cache poisoning)"
+        },
+        {
+          "tr": "Sistemin DNS ayarlarını otomatik olarak 8.8.8.8 yapar",
+          "en": "Automatically sets system DNS to 8.8.8.8"
+        },
+        {
+          "tr": "Tüm arabirimlerdeki 53 numaralı DNS trafiğini sayısal IP/port olarak yakalar ve 'dns.pcap' dosyasına kaydeder",
+          "en": "Captures port 53 DNS traffic on all interfaces numerically and writes raw packets to 'dns.pcap'"
+        },
+        {
+          "tr": "Ağdaki tüm şifreli HTTPS paketlerini deşifre eder",
+          "en": "Decrypts all HTTPS traffic on the network"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "-i any tüm kartları dinler, -nn DNS ve port çözümlemesini kapatıp gecikmeyi önler, -w ise yakalanan paketleri Wireshark ile incelenebilecek pcap formatında kaydeder.",
+        "en": "'tcpdump -i any -nn port 53 -w dns.pcap' captures raw DNS traffic without name resolution overhead, writing to pcap for forensic packet inspection."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "journalctl -u ssh.service --since \"1 hour ago\"",
+      "options": [
+        {
+          "tr": "SSH servisini 1 saat süreyle devre dışı bırakır",
+          "en": "Disables the SSH service for 1 hour"
+        },
+        {
+          "tr": "Son 1 saatte SSH ile bağlanan tüm oturumları zorla kapatır",
+          "en": "Forcefully disconnects all SSH sessions opened in the last hour"
+        },
+        {
+          "tr": "SSH servisinin yapılandırma dosyasını 1 saat önceki yedeğe geri döndürür",
+          "en": "Rolls back SSH configuration to a backup from 1 hour ago"
+        },
+        {
+          "tr": "Son 1 saat içinde SSH servisi tarafından üretilen systemd günlüklerini (log) gösterir",
+          "en": "Shows systemd journal logs generated by ssh.service within the last 1 hour"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Modern Linux dağıtımlarında systemd journal günlükleri journalctl ile filtrelenir. --since zaman filtresiyle olay müdahalesinde (incident response) tam saldırı anına odaklanılabilir.",
+        "en": "journalctl queries systemd journal logs. Filtering by unit (-u ssh.service) and relative time window (--since) is crucial during incident response triage."
+      }
+    },
+    {
+      "topic": "crypto_tunnel",
+      "code": "ssh -L 8080:127.0.0.1:80 user@remote.corp",
+      "options": [
+        {
+          "tr": "Uzak sunucunun sadece yerelinde çalışan 80 portunu kendi makinesinin 8080 portuna şifreli tünelle bağlar",
+          "en": "Tunnels remote server's localhost:80 to local port 8080 over an encrypted SSH connection"
+        },
+        {
+          "tr": "Kendi makinesindeki 8080 portunu uzak sunucuda herkese açık hale getirir",
+          "en": "Exposes local port 8080 publicly on the remote server"
+        },
+        {
+          "tr": "Uzak sunucudaki tüm internet trafiğini kendi üzerinden geçirir (VPN)",
+          "en": "Routes all remote internet traffic through local machine (VPN)"
+        },
+        {
+          "tr": "Uzak sunucunun SSH parolasını kırar",
+          "en": "Brute-forces the SSH password of remote server"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "Yerel Port Yönlendirme (Local Port Forwarding): Kendi makinenizde http://localhost:8080 adresine gittiğinizde, istek SSH tünelinden geçerek uzak makinenin kendi içindeki 127.0.0.1:80 servisine ulaşır. İç ağ pivotlama tekniğidir.",
+        "en": "Local port forwarding (-L) binds a local socket (8080) to reach a remote internal service (127.0.0.1:80) via SSH tunnel, common in internal network pivoting."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "strings -n 8 dump.bin | grep -iE 'http|admin|password|token'",
+      "options": [
+        {
+          "tr": "dump.bin dosyasını kaynak koda (C dili) geri derler (decompile)",
+          "en": "Decompiles dump.bin back into C source code"
+        },
+        {
+          "tr": "İkili dosyadaki en az 8 karakterlik okunabilir metinleri ayıklar ve hassas anahtar kelimeleri arar",
+          "en": "Extracts printable strings of at least 8 chars from binary dump and filters for sensitive keywords"
+        },
+        {
+          "tr": "dump.bin dosyasını AES algoritmasıyla şifreler",
+          "en": "Encrypts dump.bin using AES algorithm"
+        },
+        {
+          "tr": "Bellek dökümündeki zararlı yazılımları otomatik olarak temizler",
+          "en": "Automatically neutralizes malware in the memory dump"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "'strings -n 8' en az 8 karakterlik ASCII/UTF metin parçacıklarını çeker. grep -iE ile URL, şifre, token ve admin gibi hassas sızıntılar bellek veya firmware dökümlerinden hızlıca tespit edilir.",
+        "en": "'strings -n 8' extracts readable ASCII sequences of length 8+. Combining with regex grep uncovers hardcoded credentials and URLs from firmware/memory dumps."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "chattr +i /etc/resolv.conf",
+      "options": [
+        {
+          "tr": "DNS ayar dosyasını internet ortamında paylaşıma açar",
+          "en": "Exposes DNS configuration file publicly on the web"
+        },
+        {
+          "tr": "Dosyayı yalnızca root kullanıcısının çalıştırabileceği bir ikiliye dönüştürür",
+          "en": "Converts file into an executable binary runnable only by root"
+        },
+        {
+          "tr": "Dosyaya 'değiştirilemez' (immutable) özniteliği verir; root dahil hiç kimse dosyayı değiştiremez veya silemez",
+          "en": "Sets immutable attribute (+i); prevents modification, renaming, or deletion even by root"
+        },
+        {
+          "tr": "DNS önbelleğini temizler",
+          "en": "Flushes the DNS cache"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "'chattr +i' dosya sistemi düzeyinde kilit koyar. Zararlı yazılımların DNS ayarlarını değiştirmesini engellemek veya defansif sistem sıkılaştırmada kritik dosyaları korumak için kullanılır.",
+        "en": "chattr +i sets the ext2/3/4 immutable bit. Once set, no user (including root) can modify or delete the file until '-i' is explicitly removed."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "dig +short TXT malware-c2.attacker.com",
+      "options": [
+        {
+          "tr": "Zararlı alan adına DoS saldırısı düzenler",
+          "en": "Launches a DoS attack against the malicious domain"
+        },
+        {
+          "tr": "Alan adını yerel /etc/hosts dosyasına ekler",
+          "en": "Appends the domain to the local /etc/hosts file"
+        },
+        {
+          "tr": "Sistemin tüm DNS trafiğini şifreler",
+          "en": "Encrypts all system DNS queries"
+        },
+        {
+          "tr": "Hedef alan adının DNS TXT kaydını sade formatta sorgular (DNS C2 veya doğrulama analizi)",
+          "en": "Queries DNS TXT records concisely (often used for DNS C2 data exfiltration or verification)"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Saldırganlar DNS tünelleme ve Komuta Kontrol (C2) iletişiminde genellikle TXT kayıtlarını Base64 yük taşımak için kullanırlar. 'dig +short TXT' doğrudan bu payload'u ekrana döker.",
+        "en": "Attackers frequently abuse DNS TXT records for command-and-control (C2) payloads and data staging. 'dig +short TXT' cleanly displays the raw TXT payload."
+      }
+    },
+    {
+      "topic": "crypto_tunnel",
+      "code": "openssl s_client -connect target.com:443 -tls1_2",
+      "options": [
+        {
+          "tr": "Hedef sunucuyla TLS 1.2 üzerinden el sıkışması yaparak sertifikayı ve şifreleme paketlerini test eder",
+          "en": "Connects to target via TLS 1.2 to test handshake, certificates, and supported cipher suites"
+        },
+        {
+          "tr": "Hedef web sitesinin SSL sertifikasını çalar",
+          "en": "Steals SSL certificate from target web site"
+        },
+        {
+          "tr": "Hedefe yönelik 443 portundan SYN flood saldırısı yapar",
+          "en": "Performs SYN flood attack on port 443 against the target"
+        },
+        {
+          "tr": "Yerel makinede yeni bir TLS sertifikası oluşturur",
+          "en": "Generates a new TLS certificate on local machine"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "openssl s_client, SSL/TLS servisleriyle manuel el sıkışması kurmak için en popüler tanı aracıdır. Eski ve güvensiz TLS sürümlerinin (TLS 1.0/1.1) veya zayıf cipher'ların desteklenip desteklenmediğini doğrular.",
+        "en": "'openssl s_client' manually establishes SSL/TLS sessions to verify certificate validity, intermediate chains, and cipher suite support during security audits."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "lsof -i :4444",
+      "options": [
+        {
+          "tr": "4444 numaralı portu güvenlik duvarından tamamen kapatır",
+          "en": "Closes port 4444 completely in firewall"
+        },
+        {
+          "tr": "4444 portunda dinleyen veya bağlantı kuran sürecin adını, PID numarasını ve kullanıcısını gösterir",
+          "en": "Shows process name, PID, and user communicating on or listening to port 4444"
+        },
+        {
+          "tr": "4444 portuna otomatik olarak netcat ile bağlanır",
+          "en": "Automatically connects to port 4444 using netcat"
+        },
+        {
+          "tr": "4444 portundaki şifrelenmemiş paketleri otomatik siler",
+          "en": "Deletes unencrypted packets on port 4444"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "4444 portu Metasploit ve ters kabukların (reverse shell) en bilinen varsayılan portudur. lsof -i :4444, bu portu hangi kötü amaçlı sürecin açtığını doğrudan PID ile raporlar.",
+        "en": "Port 4444 is the default Metasploit reverse handler port. 'lsof -i :4444' identifies the process name, user, and PID associated with that connection."
+      }
+    },
+    {
+      "topic": "networking",
+      "code": "traceroute -n -m 15 8.8.8.8",
+      "options": [
+        {
+          "tr": "8.8.8.8 IP adresine 15 adet ICMP ping paketi gönderir",
+          "en": "Sends 15 ICMP ping packets to 8.8.8.8"
+        },
+        {
+          "tr": "Ağdaki yönlendiricilerin 8.8.8.8 adresini engellemesini sağlar",
+          "en": "Causes network routers to block 8.8.8.8"
+        },
+        {
+          "tr": "8.8.8.8 hedefine giden paketlerin geçtiği ağ atlamalarını (hops) DNS çözmeden en fazla 15 atlamaya kadar izler",
+          "en": "Traces network hops to 8.8.8.8 without reverse DNS up to a maximum of 15 hops"
+        },
+        {
+          "tr": "Hedef sunucunun 1'den 15'e kadar olan portlarını tarar",
+          "en": "Scans ports 1 through 15 on target host"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "-n sayısal IP gösterir (DNS çözümlemesini atlar, hız kazandırır), -m 15 ise TTL (Time to Live) değerini maksimum 15 atlama ile sınırlar. Ağ rotasını ve paketlerin nerede filtrelendiğini tespit eder.",
+        "en": "'-n' disables reverse DNS lookups for faster tracing, while '-m 15' sets maximum TTL hops to 15. Vital for network routing and firewall packet-drop diagnostics."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "grep -E 'Accepted (password|publickey)' /var/log/auth.log",
+      "options": [
+        {
+          "tr": "Sisteme giriş yapamayan saldırganların IP adreslerini listeler",
+          "en": "Lists IP addresses of failed brute-force attackers"
+        },
+        {
+          "tr": "Kullanıcıların SSH şifrelerini açık metin olarak ayıklar",
+          "en": "Extracts plaintext SSH passwords from logs"
+        },
+        {
+          "tr": "SSH servisinin kimlik doğrulama loglarını dosyadan siler",
+          "en": "Deletes authentication records from SSH log file"
+        },
+        {
+          "tr": "auth.log içindeki başarılı (parola veya anahtar ile) SSH oturum açma kayıtlarını filtreler",
+          "en": "Filters auth.log for successful SSH logins via password or public key"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Olay müdahalesinde saldırganın sisteme sızmayı başarıp başarmadığını teyit etmek için başarılı SSH girişleri incelenir. 'Accepted' ibaresi oturumun başarıyla açıldığını ve hangi IP'den girildiğini gösterir.",
+        "en": "In forensic investigations, distinguishing brute-force noise from actual compromises requires searching for 'Accepted' entries to verify valid logins."
+      }
+    },
+    {
+      "topic": "crypto_tunnel",
+      "code": "echo \"YW50aWdyYXZpdHk=\" | base64 -d",
+      "options": [
+        {
+          "tr": "Base64 ile kodlanmış dizeyi çözer (decode) ve ekrana 'antigravity' yazar",
+          "en": "Decodes the base64 encoded string and prints 'antigravity'"
+        },
+        {
+          "tr": "Metni SHA-256 hash özetine dönüştürür",
+          "en": "Converts the string into a SHA-256 cryptographic digest"
+        },
+        {
+          "tr": "Base64 algoritmasıyla dizeyi şifreler (encode)",
+          "en": "Encodes the string using Base64 encoding"
+        },
+        {
+          "tr": "Kelimedeki harfleri ters çevirir",
+          "en": "Reverses the order of letters in the string"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "base64 -d (-decode), Base64 formatında gizlenmiş veya kodlanmış verileri orijinal haline çevirir. Zararlı betiklerde ve ters kabuk komutlarında kod gizlemeyi (obfuscation) çözmek için sıklıkla kullanılır.",
+        "en": "'base64 -d' decodes base64-encoded strings back to plaintext. Critical when analyzing deobfuscated payload commands in malicious scripts."
       }
     }
   ],
@@ -2587,6 +3589,357 @@ const QUESTIONS = {
       "explanation": {
         "tr": "DNS keşfinde 'Zone Transfer' (AXFR) zafiyeti varsa, hedef kuruluşun tüm alt alan adları ve iç ağ IP haritası tek komutla dışarı sızar. dnsrecon bu denetimi otomatikleştirir.",
         "en": "dnsrecon automates DNS footprinting and tests for Zone Transfer misconfigurations that expose internal network topologies."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "sudo -u#-1 /bin/bash",
+      "options": [
+        {
+          "tr": "Kullanıcı numarası geçersiz olduğu için hata verip terminali kapatır",
+          "en": "Exits with invalid user error due to negative UID"
+        },
+        {
+          "tr": "CVE-2019-14287 açığını kullanarak, sudoers dosyasında !root kısıtı olsa dahi root kabuğu açar",
+          "en": "Exploits CVE-2019-14287 to spawn a root shell even when sudoers has a !root restriction"
+        },
+        {
+          "tr": "Sistemi güvenli modda açar",
+          "en": "Boots system into safe mode"
+        },
+        {
+          "tr": "Mevcut kullanıcının parolasını geçersiz kılar",
+          "en": "Invalidates current user's password"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "CVE-2019-14287: Eski sudo sürümlerinde -u#-1 parametresi (veya 4294967295) setresuid() fonksiyonuna aktarıldığında -1 parametresi 'değiştirme' olarak yorumlanır ve işlem root (0) olarak çalıştırılır.",
+        "en": "CVE-2019-14287: Specifying user ID -1 (or 4294967295) bypasses Runas !root restrictions in vulnerable sudo versions, resulting in execution as UID 0."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh",
+      "options": [
+        {
+          "tr": "Dosya sistemindeki tüm tar arşivlerini siler",
+          "en": "Deletes all tar archives on the filesystem"
+        },
+        {
+          "tr": "/bin/sh kabuğunu gzip formatında arşivler",
+          "en": "Archives /bin/sh in gzip format"
+        },
+        {
+          "tr": "GTFOBins tar checkpoint parametresini istismar ederek kabuk (shell) çalıştırır ve yetki yükseltir",
+          "en": "Exploits GTFOBins tar checkpoint flags to execute /bin/sh and achieve privilege escalation"
+        },
+        {
+          "tr": "/dev/null dosyasını geçici belleğe kopyalar",
+          "en": "Copies /dev/null to temporary RAM"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "Klasik bir GTFOBins ve wildcard (*) istismarıdır. 'tar' komutu sudo veya SUID ile çalıştırılabiliyorsa ya da cron içinde 'tar *' varsa, --checkpoint-action parametresi root yetkisiyle keyfi komut çalıştırılmasını sağlar.",
+        "en": "A textbook GTFOBins and wildcard injection exploit. If tar is callable via sudo or root cron jobs, --checkpoint-action executes arbitrary commands as root."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "script -qc /bin/bash /dev/null",
+      "options": [
+        {
+          "tr": "Kullanıcının klavye vuruşlarını /dev/null dosyasına kaydeder",
+          "en": "Logs user keystrokes to /dev/null"
+        },
+        {
+          "tr": "Hedef makinede bir bash script derleyicisi başlatır",
+          "en": "Launches a bash script compiler on target machine"
+        },
+        {
+          "tr": "Sistemdeki tüm sözde terminal (pty) aygıtlarını sıfırlar",
+          "en": "Resets all pseudo-terminal (pty) devices on the system"
+        },
+        {
+          "tr": "'script' aracılığıyla sessizce yeni bir PTY sahte terminal oturumu oluşturarak kabuk stabilizasyonu sağlar",
+          "en": "Spawns a clean pseudo-terminal (PTY) shell session via 'script' utility for shell stabilization"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Python kurulu olmayan minimalist sunucularda netcat ters kabuğunu (dumb shell) etkileşimli PTY kabuğuna dönüştürmek için 'script -qc /bin/bash /dev/null' en etkili alternatif yöntemdir.",
+        "en": "When Python is absent on target, 'script -qc /bin/bash /dev/null' provides an effective alternative to allocate a PTY and stabilize dumb netcat shells."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "cat /etc/crontab",
+      "options": [
+        {
+          "tr": "Sistem genelinde root yetkisiyle periyodik çalışan zamanlanmış görevleri listeler",
+          "en": "Inspects system-wide crontab for scheduled tasks running with root privileges"
+        },
+        {
+          "tr": "Kullanıcının kendi şahsi alarm saatini ayarlar",
+          "en": "Sets personal alarm clock for the current user"
+        },
+        {
+          "tr": "Sistemdeki tüm zamanlanmış görevleri durdurur",
+          "en": "Stops all scheduled cron tasks across the system"
+        },
+        {
+          "tr": "Cron servisini en son sürüme günceller",
+          "en": "Updates the cron daemon to the latest release"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "/etc/crontab dosyasında root yetkisiyle her dakika çalışan bir betik yazılabilir (writable) durumdaysa veya wildcard (*) içeriyorsa, saldırgan bu betiğe komut ekleyerek saniyeler içinde root olabilir.",
+        "en": "System crontab (/etc/crontab) defines system-wide scheduled jobs. Writable scripts or wildcard tar jobs running as root represent direct privilege escalation paths."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "find / -perm -u=s -type f 2>/dev/null",
+      "options": [
+        {
+          "tr": "Sistemdeki tüm gizli dosyaları siler",
+          "en": "Deletes all hidden files across the system"
+        },
+        {
+          "tr": "Kök dizinden başlayarak SUID biti set edilmiş çalıştırılabilir dosyaları arar",
+          "en": "Recursively scans filesystem for files with the SUID bit set owned by root"
+        },
+        {
+          "tr": "Kullanıcıya özel oluşturulmuş SSH anahtarlarını listeler",
+          "en": "Lists user-specific generated SSH keys"
+        },
+        {
+          "tr": "Salt okunur dosyaların izinlerini normale döndürür",
+          "en": "Resets read-only file permissions back to default"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "SUID (Set User ID), dosyanın çalıştıran kullanıcının değil dosya sahibinin (genelde root) yetkileriyle çalışmasını sağlar. GTFOBins üzerinde listelenen bir ikilide SUID varsa (örn: bash, cp, vim) root yetkisi elde edilir.",
+        "en": "SUID binaries execute with the permissions of the file owner (typically root). Essential reconnaissance command to find misconfigured binaries vulnerable to GTFOBins."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "LD_PRELOAD=/tmp/evil.so /usr/bin/sudo /usr/bin/id",
+      "options": [
+        {
+          "tr": "evil.so dosyasını güvenli şekilde bellekten temizler",
+          "en": "Safely unloads evil.so from memory"
+        },
+        {
+          "tr": "Sudo parolasını doğrulamak için kriptografik imza üretir",
+          "en": "Generates cryptographic signature to verify sudo password"
+        },
+        {
+          "tr": "sudoers dosyasında 'env_keep+=LD_PRELOAD' varsa, paylaşılan kütüphaneyi enjekte ederek anında root olur",
+          "en": "If 'env_keep+=LD_PRELOAD' is configured in sudoers, injects custom shared object for root privesc"
+        },
+        {
+          "tr": "Sistemdeki tüm kütüphaneleri zararlı koda karşı tarar",
+          "en": "Scans all system libraries for malicious code"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "LD_PRELOAD ortam değişkeni, program çalıştırılmadan önce istenen bir paylaşılan kütüphaneyi zorla yükletir. Sudoers dosyasında env_keep ile korunuyorsa, kütüphanedeki constructor fonksiyonu root yetkisiyle tetiklenir.",
+        "en": "LD_PRELOAD forces dynamic linker to load specified library before others. In sudoers with 'env_keep+=LD_PRELOAD', shared library constructors execute with root UID."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "echo 'kali ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers",
+      "options": [
+        {
+          "tr": "'kali' kullanıcısının tüm sudo haklarını elinden alır",
+          "en": "Revokes all sudo privileges from user 'kali'"
+        },
+        {
+          "tr": "Sudo komutu çalıştırıldığında iki faktörlü doğrulamayı (2FA) zorunlu kılar",
+          "en": "Enforces two-factor authentication (2FA) for sudo commands"
+        },
+        {
+          "tr": "Sudoers dosyasını sözdizimi hatası nedeniyle bozar ve kilitler",
+          "en": "Locks the system due to a syntax error in sudoers"
+        },
+        {
+          "tr": "'kali' kullanıcısına parolasız ve sınırsız tam root (sudo) yetkisi tanımlar",
+          "en": "Grants user 'kali' unlimited root sudo privileges without requiring any password"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Saldırganlar root yetkisi kazandıktan sonra kalıcılık (persistence) sağlamak için genellikle kendi kullanıcılarına veya yeni oluşturdukları bir hesaba NOPASSWD: ALL izni eklerler.",
+        "en": "A standard persistence technique. Adding 'NOPASSWD: ALL' in /etc/sudoers grants unrestricted privilege elevation without prompting for authentication."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "find / -writable -type d 2>/dev/null | grep -Ev '(/proc|/sys)'",
+      "options": [
+        {
+          "tr": "Sistemde herkesin (veya mevcut kullanıcının) yazma yetkisi olan kritik dizinleri keşfeder",
+          "en": "Discovers critical directories writable by the current user or world-writable, excluding virtual FS"
+        },
+        {
+          "tr": "Dosya sistemindeki tüm dizinleri kilitler",
+          "en": "Locks down all directories on the filesystem"
+        },
+        {
+          "tr": "Boş dizinleri otomatik olarak temizler",
+          "en": "Cleans up empty directories automatically"
+        },
+        {
+          "tr": "Yazılabilir dosyaları bulup izinlerini 777 yapar",
+          "en": "Finds writable files and changes their permissions to 777"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "Saldırganlar hedef sisteme dosya yüklemek veya cron betiklerini maniple etmek için yazılabilir klasörler ararlar. /proc ve /sys sanal dosya sistemleri hariç tutularak gerçek yazılabilir dizinler filtrelenir.",
+        "en": "Attackers look for writable directories to drop payloads or hijack shared objects. Excluding /proc and /sys filters out kernel pseudo-filesystems."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "cat /proc/version",
+      "options": [
+        {
+          "tr": "İşlemcinin donanımsal mikrokod sürümünü günceller",
+          "en": "Updates the CPU hardware microcode version"
+        },
+        {
+          "tr": "Çekirdek sürümü, derleyici (gcc) ve build detaylarını göstererek çekirdek açığı (Dirty COW vb.) araştırmasını sağlar",
+          "en": "Prints kernel version and gcc compiler details to assess vulnerability to kernel exploits (Dirty COW, etc.)"
+        },
+        {
+          "tr": "Linux çekirdeğini otomatik olarak en son yamaya günceller",
+          "en": "Automatically updates the Linux kernel to latest patch"
+        },
+        {
+          "tr": "Açık olan terminal pencerelerinin sayısını basar",
+          "en": "Prints the number of active terminal windows"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "/proc/version; kernel sürümüyle beraber çekirdeğin ne zaman ve hangi derleyiciyle derlendiğini gösterir. Bu bilgiye dayanarak 'searchsploit linux kernel [version]' ile uygun yerel exploit bulunur.",
+        "en": "/proc/version reveals kernel version and compilation timestamps. Crucial for matching against local exploit databases like SearchSploit or Exploit-DB."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "strace -f -p 1337 -e trace=open,openat,read,write",
+      "options": [
+        {
+          "tr": "1337 numaralı işlemi derhal sonlandırır",
+          "en": "Terminates process 1337 immediately"
+        },
+        {
+          "tr": "Sürecin bellek adreslerini sabit diske döküm (dump) alır",
+          "en": "Dumps process memory addresses to hard disk"
+        },
+        {
+          "tr": "1337 PID'li sürecin açtığı, okuduğu ve yazdığı dosya sistem çağrılarını (syscalls) canlı izler",
+          "en": "Traces file opening, reading, and writing system calls (syscalls) of PID 1337 in real time"
+        },
+        {
+          "tr": "Sürecin CPU çekirdek kullanımını sınırlandırır",
+          "en": "Throttles process CPU core allocation"
+        }
+      ],
+      "answer": 2,
+      "explanation": {
+        "tr": "'strace' sistem çağrılarını kancalar (hook). Şüpheli bir zararlı yazılımın veya arka kapının hangi dosyaları açtığını, hangi logları kurcaladığını ya da nereye veri yazdığını tespit etmekte paha biçilemezdir.",
+        "en": "'strace' hooks system calls. Tracking 'open,openat,read,write' allows incident responders to inspect files touched by suspected malware or backdoors in real time."
+      }
+    },
+    {
+      "topic": "privesc",
+      "code": "ls -la /var/run/docker.sock",
+      "options": [
+        {
+          "tr": "Docker servisinin bellek tüketimini sıfırlar",
+          "en": "Flushes Docker service memory consumption"
+        },
+        {
+          "tr": "Çalışan tüm Docker konteynerlerini durdurur",
+          "en": "Stops all currently running Docker containers"
+        },
+        {
+          "tr": "Docker soketini ağ üzerinden dünyaya açar",
+          "en": "Exposes Docker socket publicly over the internet"
+        },
+        {
+          "tr": "Docker soket izinlerini kontrol eder; eğer yazma izni varsa sunucu üzerinde root yetkisi elde edilebilir",
+          "en": "Checks Docker socket permissions; write access allows container breakout to full host root"
+        }
+      ],
+      "answer": 3,
+      "explanation": {
+        "tr": "Kullanıcı docker grubundaysa veya docker.sock yazılabilirse, 'docker run -v /:/hostOS -it alpine chroot /hostOS' komutu ile ana makinenin kök dizini bağlanarak tam root kabuğu elde edilir (Docker Escaping).",
+        "en": "Write access to docker.sock allows mounting the host root filesystem into a privileged container ('-v /:/mnt'), resulting in trivial host compromise."
+      }
+    },
+    {
+      "topic": "forensics",
+      "code": "auditctl -w /etc/shadow -p wa -k shadow_access",
+      "options": [
+        {
+          "tr": "/etc/shadow dosyasına yapılan yazma ve öznitelik değişikliklerini 'shadow_access' anahtarıyla denetler",
+          "en": "Audits write and attribute modifications to /etc/shadow, tagging events with 'shadow_access' key"
+        },
+        {
+          "tr": "/etc/shadow dosyasını şifreleyerek root erişimini engeller",
+          "en": "Encrypts /etc/shadow to prevent root read access"
+        },
+        {
+          "tr": "Gölge parola dosyasını periyodik olarak silip baştan oluşturur",
+          "en": "Periodically flushes and regenerates the shadow file"
+        },
+        {
+          "tr": "Parola dosyasındaki zayıf şifreleri otomatik tespit eder",
+          "en": "Automatically detects weak passwords in the shadow file"
+        }
+      ],
+      "answer": 0,
+      "explanation": {
+        "tr": "Linux Audit Daemon (auditd) kuralları, dosyalara erişimleri izler. Bu kural ile /etc/shadow dosyasına yetkisiz bir parola sıfırlama veya yeni kullanıcı ekleme girişimi anında loglanır.",
+        "en": "'auditctl -w' monitors critical file access. Tagging events with '-k shadow_access' enables automated alerting whenever /etc/shadow is touched."
+      }
+    },
+    {
+      "topic": "security_recon",
+      "code": "grep -ri \"password\" /var/www/ 2>/dev/null",
+      "options": [
+        {
+          "tr": "Web sunucusundaki tüm şifreleri SHA-512 ile hasheler",
+          "en": "Hashes all web server passwords with SHA-512"
+        },
+        {
+          "tr": "Web dizinindeki betiklerde ve dosyalarda açıkta bırakılmış veritabanı parolalarını arar",
+          "en": "Recursively searches web directories for hardcoded database passwords and secrets"
+        },
+        {
+          "tr": "Web sitesine şifre giren kullanıcıların klavye girdilerini yakalar",
+          "en": "Keylogs users entering passwords on the web site"
+        },
+        {
+          "tr": "Web dizinindeki '.password' adlı dosyaları siler",
+          "en": "Deletes files named '.password' in the web directory"
+        }
+      ],
+      "answer": 1,
+      "explanation": {
+        "tr": "Web sunucusu sızma testlerinde wp-config.php, .env, config.php gibi dosyalarda unutulan açık metin SQL veya API parolalarını bulmak en sık karşılaşılan yetki yükseltme başlangıç adımlarındandır.",
+        "en": "Searching web roots recursively for 'password' or 'db_pass' uncovers leaked database credentials in config files like wp-config.php or .env files."
       }
     }
   ]

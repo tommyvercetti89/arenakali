@@ -458,6 +458,11 @@ const state = {
 let currentScreen = "home";
 let terminal = null;
 
+function getTotalQuestionCount() {
+  if (typeof QUESTIONS === "undefined" || !QUESTIONS) return 0;
+  return Object.values(QUESTIONS).reduce((sum, arr) => sum + arr.length, 0);
+}
+
 function dict() {
   return I18N[state.lang] || I18N.tr;
 }
@@ -652,7 +657,7 @@ function applyLanguage(lang) {
     els.setupModeDesc.textContent = state.setup.mode === "classic" ? d.modeClassicDesc : d.modeExamDesc;
   }
   if (els.setupDiffLabel && state.pendingDifficulty) {
-    const countNum = state.pendingDifficulty === 'mixed' ? 100 : (QUESTIONS[state.pendingDifficulty] ? QUESTIONS[state.pendingDifficulty].length : 0);
+    const countNum = state.pendingDifficulty === 'mixed' ? getTotalQuestionCount() :  (QUESTIONS[state.pendingDifficulty] ? QUESTIONS[state.pendingDifficulty].length : 0);
     els.setupDiffLabel.textContent = `${d.diff[state.pendingDifficulty].label} · ${fmt(d.questionCount, { n: countNum })}`;
   }
   if (els.debugPoolLabel && state.debugLevel) {
@@ -753,7 +758,7 @@ function renderHomeCards() {
     card.type = "button";
     card.className = "diff-card";
     const info = d.diff[key];
-    const poolCount = key === "mixed" ? 100 : (QUESTIONS[key] ? QUESTIONS[key].length : 0);
+    const poolCount = key === "mixed" ? getTotalQuestionCount() :  (QUESTIONS[key] ? QUESTIONS[key].length : 0);
     const bestKey = `quiz_${key}`;
     const bestScoreText = state.progress.best[bestKey] !== undefined ? fmt(d.best, { a: state.progress.best[bestKey], b: 10 }) : d.notAttempted;
 
@@ -829,7 +834,7 @@ function openSetupModal(difficulty, isDirect = false) {
   state.isDebug = false;
   const d = dict();
 
-  const countNum = difficulty === 'mixed' ? 100 : (QUESTIONS[difficulty] ? QUESTIONS[difficulty].length : 0);
+  const countNum = difficulty === 'mixed' ? getTotalQuestionCount() :  (QUESTIONS[difficulty] ? QUESTIONS[difficulty].length : 0);
   els.setupDiffLabel.textContent = `${d.diff[difficulty].label} · ${fmt(d.questionCount, { n: countNum })}`;
 
   updateTopicSelectOptions();
